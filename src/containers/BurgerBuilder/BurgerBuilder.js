@@ -21,38 +21,52 @@ class BurgerBuilder extends Component {
             [burgerIngredientTypes.CHEESE]: 0,
             [burgerIngredientTypes.MEAT]: 0
         },
-        totalPrice: 4
+        totalPrice: 4,
+        purchaseable: false
     };
 
-    addIngredientHandler = 
-        (type) => 
-            this.setState(
-                (prevState) => 
+    addIngredientHandler = (type) => {
+
+        this.setState(
+            (prevState) => 
                 (
                     { 
                         ingredients: { 
                             ...this.state.ingredients, 
                             [type]: prevState.ingredients[type] + 1
                         },
-                        totalPrice: prevState.totalPrice + INGREDIENT_PRICES[type]
+                        totalPrice: prevState.totalPrice + INGREDIENT_PRICES[type],
+                        purchaseable: this.getIngredientAmount(prevState.ingredients) + 1 > 0
                     }
                 )
-            );
+        );
 
-    removeIngredientHandler = 
-        (type) => 
-            this.setState(
-                (prevState) => 
+    };
+
+    removeIngredientHandler = (type) => {
+
+        this.setState(
+            (prevState) => 
                 (
                     { 
                         ingredients: { 
                             ...this.state.ingredients, 
                             [type]: prevState.ingredients[type] <= 0 ? 0 : prevState.ingredients[type] - 1
                         },
-                        totalPrice: prevState.ingredients[type] <= 0 ? prevState.totalPrice : prevState.totalPrice - INGREDIENT_PRICES[type]
+                        totalPrice: prevState.ingredients[type] <= 0 ? prevState.totalPrice : prevState.totalPrice - INGREDIENT_PRICES[type],
+                        purchaseable: this.getIngredientAmount(prevState.ingredients) - 1 > 0
                     }
                 )
-            );
+        );
+
+    };
+
+    getIngredientAmount(ingredients) {
+        return Object
+                .keys(ingredients)
+                .map(ingredientKey => ingredients[ingredientKey])
+                .reduce((acc, cv) => acc + cv, 0);
+    }
 
     render() {
 
@@ -72,6 +86,7 @@ class BurgerBuilder extends Component {
                     ingredientAdded={ this.addIngredientHandler }
                     ingredientRemoved={ this.removeIngredientHandler }
                     disabled={ disabledButtonsInfo }
+                    purchaseable={ this.state.purchaseable }
                 /> 
 
             </Fragment>
