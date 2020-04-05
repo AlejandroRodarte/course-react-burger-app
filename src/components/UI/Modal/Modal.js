@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import classes from './Modal.module.css';
 
-const Modal = ({ children, show }) => {
+import Backdrop from '../Backdrop/Backdrop';
+
+const Modal = ({ children, show, modalClosed }) => {
 
     const modalStyles = {
         transform: show ? 'translateY(0)' : 'translateY(-100vh)',
@@ -10,12 +12,21 @@ const Modal = ({ children, show }) => {
     };
 
     return (
-        <div 
-            className={ classes.Modal }
-            style={ modalStyles }
-        >
-            { children }
-        </div>
+        <Fragment>
+
+            <Backdrop 
+                show={ show } 
+                clicked={ modalClosed }
+            />
+
+            <div 
+                className={ classes.Modal }
+                style={ modalStyles }
+            >
+                { children }
+            </div>
+        
+        </Fragment>
     );
 
 };
