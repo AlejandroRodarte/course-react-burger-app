@@ -20,12 +20,13 @@ const Burger = ({ ingredients }) => {
                                     type={ ingredientKey } 
                                 />
                         )
-            );
+            )
+            .reduce((prevJsxArr, curJsxArr) => [...prevJsxArr, ...curJsxArr], []);
 
     return (
         <div className={ classes.Burger }>
             <BurgerIngredient type={ burgerIngredientTypes.BREAD_TOP } />
-            { burgerIngredientsJsx }
+            { burgerIngredientsJsx.length > 0 ? burgerIngredientsJsx : <p>Please start adding ingredients!</p> }
             <BurgerIngredient type={ burgerIngredientTypes.BREAD_BOTTOM } />
         </div>
     );
