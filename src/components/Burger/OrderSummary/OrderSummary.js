@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react';
 
+import Button from '../../UI/Button/Button';
+
 import burgerIngredientNames from '../../../utils/burger/burger-ingredient-names';
 
-const OrderSummary = ({ ingredients }) => {
+const OrderSummary = ({ ingredients, purchaseCanceled, purchaseContinued }) => {
 
     const ingredientKeyStyles = {
         textTransform: 'capitalize'
@@ -32,12 +34,18 @@ const OrderSummary = ({ ingredients }) => {
             <p>
                 Continue to Checkout?
             </p>
-            <button>
+            <Button
+                clicked={ purchaseCanceled }
+                type="Danger"
+            >
                 CANCEL
-            </button>
-            <button>
+            </Button>
+            <Button
+                clicked={ purchaseContinued }
+                type="Success"
+            >
                 CONTINUE
-            </button>
+            </Button>
         </Fragment>
     );
 
