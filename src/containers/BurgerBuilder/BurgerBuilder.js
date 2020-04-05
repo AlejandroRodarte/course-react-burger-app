@@ -2,15 +2,11 @@ import React, { Component, Fragment } from 'react';
 
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
 import * as burgerIngredientTypes from '../../types/burger/burger-ingredient-types';
-
-const INGREDIENT_PRICES = {
-    [burgerIngredientTypes.SALAD]: 0.5,
-    [burgerIngredientTypes.BACON]: 0.4,
-    [burgerIngredientTypes.CHEESE]: 1.3,
-    [burgerIngredientTypes.MEAT]: 0.7
-};
+import burgerIngredientPrices from '../../utils/burger/burger-ingredient-prices';
 
 class BurgerBuilder extends Component {
     
@@ -35,7 +31,7 @@ class BurgerBuilder extends Component {
                             ...this.state.ingredients, 
                             [type]: prevState.ingredients[type] + 1
                         },
-                        totalPrice: prevState.totalPrice + INGREDIENT_PRICES[type],
+                        totalPrice: prevState.totalPrice + burgerIngredientPrices[type],
                         purchaseable: this.getIngredientAmount(prevState.ingredients) + 1 > 0
                     }
                 )
@@ -53,7 +49,7 @@ class BurgerBuilder extends Component {
                             ...this.state.ingredients, 
                             [type]: prevState.ingredients[type] <= 0 ? 0 : prevState.ingredients[type] - 1
                         },
-                        totalPrice: prevState.ingredients[type] <= 0 ? prevState.totalPrice : prevState.totalPrice - INGREDIENT_PRICES[type],
+                        totalPrice: prevState.ingredients[type] <= 0 ? prevState.totalPrice : prevState.totalPrice - burgerIngredientPrices[type],
                         purchaseable: this.getIngredientAmount(prevState.ingredients) - 1 > 0
                     }
                 )
@@ -78,6 +74,10 @@ class BurgerBuilder extends Component {
 
         return (
             <Fragment>
+
+                <Modal>
+                    <OrderSummary ingredients={ this.state.ingredients } />
+                </Modal>
 
                 <Burger ingredients={ this.state.ingredients } />
 

@@ -5,22 +5,23 @@ import classes from './BuildControls.module.css';
 import BuildControl from './BuildControl/BuildControl';
 
 import * as burgerIngredientTypes from '../../../types/burger/burger-ingredient-types';
+import burgerIngredientNames from '../../../utils/burger/burger-ingredient-names'
 
 const controls = [
     {
-        label: 'Salad',
+        label: burgerIngredientNames[burgerIngredientTypes.SALAD],
         type: burgerIngredientTypes.SALAD
     },
     {
-        label: 'Bacon',
+        label: burgerIngredientNames[burgerIngredientTypes.BACON],
         type: burgerIngredientTypes.BACON
     },
     {
-        label: 'Cheese',
+        label: burgerIngredientNames[burgerIngredientTypes.CHEESE],
         type: burgerIngredientTypes.CHEESE
     },
     {
-        label: 'Meat',
+        label: burgerIngredientNames[burgerIngredientTypes.MEAT],
         type: burgerIngredientTypes.MEAT
     }
 ];
