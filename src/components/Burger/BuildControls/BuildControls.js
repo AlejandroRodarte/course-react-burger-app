@@ -25,14 +25,15 @@ const controls = [
     }
 ];
 
-const BuildControls = () => (
+const BuildControls = ({ ingredientAdded }) => (
     <div className={ classes.BuildControls }>
         {
             controls.map(
                 ({ label, type }) => 
                     <BuildControl
-                        type={ label }
+                        key={ label }
                         label={ label }
+                        added={ () => ingredientAdded(type) }
                     />
             )
         }
