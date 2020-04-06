@@ -8,6 +8,8 @@ const DrawerToggle = ({ click }) => (
         className={ classes.DrawerToggle }
     >
         <div></div>
+        <div></div>
+        <div></div>
     </div>
 );
 
