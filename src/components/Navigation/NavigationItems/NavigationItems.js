@@ -13,7 +13,7 @@ const NavigationItems = () => (
             Burger Builder
         </NavigationItem>
         <NavigationItem link="/">
-            Burger Builder
+            Checkout
         </NavigationItem>
     </ul>
 );
