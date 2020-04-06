@@ -4,7 +4,7 @@ import Button from '../../UI/Button/Button';
 
 import burgerIngredientNames from '../../../utils/burger/burger-ingredient-names';
 
-const OrderSummary = ({ ingredients, purchaseCanceled, purchaseContinued }) => {
+const OrderSummary = ({ ingredients, purchaseCanceled, purchaseContinued, price }) => {
 
     const ingredientKeyStyles = {
         textTransform: 'capitalize'
@@ -31,6 +31,9 @@ const OrderSummary = ({ ingredients, purchaseCanceled, purchaseContinued }) => {
             <ul>
                 { ingredientSummaryJsx }
             </ul>
+            <p>
+                <strong>Total Price: ${ price.toFixed(2) }</strong>
+            </p>
             <p>
                 Continue to Checkout?
             </p>
