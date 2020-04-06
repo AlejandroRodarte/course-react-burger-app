@@ -8,6 +8,8 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import * as burgerIngredientTypes from '../../types/burger/burger-ingredient-types';
 import burgerIngredientPrices from '../../utils/burger/burger-ingredient-prices';
 
+import axios from '../../axios/axios-orders';
+
 class BurgerBuilder extends Component {
     
     state = {
@@ -66,8 +68,30 @@ class BurgerBuilder extends Component {
         this.setState(() => ({ purchasing: false }));
     };
 
-    purchaseContinueHandler = () => {
-        alert('Continue');
+    purchaseContinueHandler = async () => {
+
+        const order = {
+            ingredients: this.state.ingredients,
+            price: this.state.totalPrice,
+            customer: {
+                name: 'Alex',
+                address: {
+                    street: 'Test street',
+                    zipCode: '41351',
+                    country: 'Germany'
+                },
+                email: 'test@test.com'
+            },
+            deliveryMethod: 'fastest'
+        };
+
+        try {
+            const res = await axios.post('/orders.json', order);
+            console.log(res);
+        } catch (e) {
+            console.log(e);
+        }
+
     };
 
     getIngredientAmount(ingredients) {
