@@ -1,57 +1,65 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 
 import Button from '../../UI/Button/Button';
 
 import burgerIngredientNames from '../../../utils/burger/burger-ingredient-names';
 
-const OrderSummary = ({ ingredients, purchaseCanceled, purchaseContinued, price }) => {
+class OrderSummary extends Component {
+    
+    componentDidUpdate() {
+        console.log('[OrderSummary] componentDidUpdate');
+    }
 
-    const ingredientKeyStyles = {
-        textTransform: 'capitalize'
-    };
+    render() {
 
-    const ingredientSummaryJsx =
-        Object
-            .keys(ingredients)
-            .map(
-                (ingredientKey) => 
-                    <li key={ ingredientKey }>
-                        <span style={ ingredientKeyStyles }>{ burgerIngredientNames[ingredientKey] }</span>: { ingredients[ingredientKey] }
-                    </li>
-            );
+        const ingredientKeyStyles = {
+            textTransform: 'capitalize'
+        };
+    
+        const ingredientSummaryJsx =
+            Object
+                .keys(this.props.ingredients)
+                .map(
+                    (ingredientKey) => 
+                        <li key={ ingredientKey }>
+                            <span style={ ingredientKeyStyles }>{ burgerIngredientNames[ingredientKey] }</span>: { this.props.ingredients[ingredientKey] }
+                        </li>
+                );
+    
+        return (
+            <Fragment>
+                <h3>
+                    Your Order
+                </h3>
+                <p>
+                    A delicious burger with the following ingredients
+                </p>
+                <ul>
+                    { ingredientSummaryJsx }
+                </ul>
+                <p>
+                    <strong>Total Price: ${ this.props.price.toFixed(2) }</strong>
+                </p>
+                <p>
+                    Continue to Checkout?
+                </p>
+                <Button
+                    clicked={ this.props.purchaseCanceled }
+                    type="Danger"
+                >
+                    CANCEL
+                </Button>
+                <Button
+                    clicked={ this.props.purchaseContinued }
+                    type="Success"
+                >
+                    CONTINUE
+                </Button>
+            </Fragment>
+        );
 
-    return (
-        <Fragment>
-            <h3>
-                Your Order
-            </h3>
-            <p>
-                A delicious burger with the following ingredients
-            </p>
-            <ul>
-                { ingredientSummaryJsx }
-            </ul>
-            <p>
-                <strong>Total Price: ${ price.toFixed(2) }</strong>
-            </p>
-            <p>
-                Continue to Checkout?
-            </p>
-            <Button
-                clicked={ purchaseCanceled }
-                type="Danger"
-            >
-                CANCEL
-            </Button>
-            <Button
-                clicked={ purchaseContinued }
-                type="Success"
-            >
-                CONTINUE
-            </Button>
-        </Fragment>
-    );
+    }
 
-};
+}
 
 export default OrderSummary;
