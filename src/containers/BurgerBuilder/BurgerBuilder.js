@@ -8,7 +8,6 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
-import * as burgerIngredientTypes from '../../types/burger/burger-ingredient-types';
 import burgerIngredientPrices from '../../utils/burger/burger-ingredient-prices';
 
 import axios from '../../axios/axios-orders';
@@ -16,17 +15,23 @@ import axios from '../../axios/axios-orders';
 class BurgerBuilder extends Component {
     
     state = {
-        ingredients: {
-            [burgerIngredientTypes.SALAD]: 0,
-            [burgerIngredientTypes.BACON]: 0,
-            [burgerIngredientTypes.CHEESE]: 0,
-            [burgerIngredientTypes.MEAT]: 0
-        },
+        ingredients: null,
         totalPrice: 4,
         purchaseable: false,
         purchasing: false,
-        loading: false
+        loading: false,
+        error: false
     };
+
+    async componentDidMount() {
+        try {
+            const { data: ingredients } = await axios.get('/ingredients');
+            this.setState(() => ({ ingredients }));
+        } catch (e) {
+            this.setState(() => ({ error: true }));
+            console.log(e);
+        }
+    }
 
     addIngredientHandler = (type) => {
 
@@ -121,19 +126,42 @@ class BurgerBuilder extends Component {
 
     render() {
 
-        const disabledButtonsInfo = {};
+        let modalContentJsx = null;
 
-        Object
-            .keys(this.state.ingredients)
-            .forEach((ingredientKey) => disabledButtonsInfo[ingredientKey] = this.state.ingredients[ingredientKey] <= 0);
+        let mainContentJsx = this.state.error ? <p>Ingredients not loaded!</p> : <Spinner />;
 
-        let modalContentJsx =
-            <OrderSummary 
-                ingredients={ this.state.ingredients }
-                purchaseCanceled={ this.purchaseCancelHandler }
-                purchaseContinued={ this.purchaseContinueHandler }
-                price={ this.state.totalPrice }
-            />;
+        if (this.state.ingredients) {
+
+            const disabledButtonsInfo = {};
+
+            Object
+                .keys(this.state.ingredients)
+                .forEach((ingredientKey) => disabledButtonsInfo[ingredientKey] = this.state.ingredients[ingredientKey] <= 0);
+
+            mainContentJsx = (
+                <Fragment>
+                    <Burger ingredients={ this.state.ingredients } />
+    
+                    <BuildControls
+                        price={ this.state.totalPrice }
+                        ingredientAdded={ this.addIngredientHandler }
+                        ingredientRemoved={ this.removeIngredientHandler }
+                        disabled={ disabledButtonsInfo }
+                        purchaseable={ this.state.purchaseable }
+                        ordered={ this.purchaseHandler }
+                    /> 
+                </Fragment>
+            );
+
+            modalContentJsx =
+                <OrderSummary 
+                    ingredients={ this.state.ingredients }
+                    purchaseCanceled={ this.purchaseCancelHandler }
+                    purchaseContinued={ this.purchaseContinueHandler }
+                    price={ this.state.totalPrice }
+                />;
+
+        }
 
         if (this.state.loading) {
             modalContentJsx = <Spinner />;
@@ -149,16 +177,7 @@ class BurgerBuilder extends Component {
                     { modalContentJsx }
                 </Modal>
 
-                <Burger ingredients={ this.state.ingredients } />
-
-                <BuildControls
-                    price={ this.state.totalPrice }
-                    ingredientAdded={ this.addIngredientHandler }
-                    ingredientRemoved={ this.removeIngredientHandler }
-                    disabled={ disabledButtonsInfo }
-                    purchaseable={ this.state.purchaseable }
-                    ordered={ this.purchaseHandler }
-                /> 
+                { mainContentJsx }
 
             </Fragment>
         );
