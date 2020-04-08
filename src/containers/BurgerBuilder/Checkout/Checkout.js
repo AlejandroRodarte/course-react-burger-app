@@ -7,11 +7,20 @@ import * as burgerIngredientTypes from '../../../types/burger/burger-ingredient-
 class Checkout extends Component {
 
     state = {
-        ingredients: []
+        ingredients: {}
     };
 
     componentDidMount() {
-        this.setState(() => ({ ingredients: this.props.location.state.ingredients }));
+
+        const ingredients = {};
+        const query = new URLSearchParams(this.props.location.search);
+
+        for (const [ingredient, amount] of query.entries()) {
+            ingredients[ingredient] = +amount;
+        }
+
+        this.setState(() => ({ ingredients }));
+
     }
 
     checkoutCancelledHandler = () => this.props.history.goBack();
