@@ -77,43 +77,45 @@ class BurgerBuilder extends Component {
         this.setState(() => ({ purchasing: false }));
     };
 
-    purchaseContinueHandler = async () => {
+    purchaseContinueHandler = () => {
 
-        this.setState(() => ({ loading: true }));
+        this.props.history.push('/checkout');
 
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: 'Alex',
-                address: {
-                    street: 'Test street',
-                    zipCode: '41351',
-                    country: 'Germany'
-                },
-                email: 'test@test.com'
-            },
-            deliveryMethod: 'fastest'
-        };
+        // this.setState(() => ({ loading: true }));
 
-        try {
+        // const order = {
+        //     ingredients: this.state.ingredients,
+        //     price: this.state.totalPrice,
+        //     customer: {
+        //         name: 'Alex',
+        //         address: {
+        //             street: 'Test street',
+        //             zipCode: '41351',
+        //             country: 'Germany'
+        //         },
+        //         email: 'test@test.com'
+        //     },
+        //     deliveryMethod: 'fastest'
+        // };
 
-            const res = await axios.post('/orders.json', order);
+        // try {
 
-            this.setState(() => ({ 
-                loading: false,
-                purchasing: false
-            }));
+        //     const res = await axios.post('/orders.json', order);
 
-            console.log(res);
+        //     this.setState(() => ({ 
+        //         loading: false,
+        //         purchasing: false
+        //     }));
+
+        //     console.log(res);
             
-        } catch (e) {
-            this.setState(() => ({ 
-                loading: false,
-                purchasing: false
-            }));
-            console.log(e);
-        }
+        // } catch (e) {
+        //     this.setState(() => ({ 
+        //         loading: false,
+        //         purchasing: false
+        //     }));
+        //     console.log(e);
+        // }
 
     };
 
