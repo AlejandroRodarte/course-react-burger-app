@@ -9,6 +9,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 import burgerIngredientPrices from '../../utils/burger/burger-ingredient-prices';
+import parseObjectToQueryParams from '../../utils/functions/parse-object-to-query-params';
 
 import axios from '../../axios/axios-orders';
 
@@ -79,7 +80,11 @@ class BurgerBuilder extends Component {
 
     purchaseContinueHandler = () => {
 
-        this.props.history.push('/checkout');
+        const s = parseObjectToQueryParams(this.state.ingredients)
+
+        console.log(s);
+
+        this.props.history.push('/checkout', { ingredients: { ...this.state.ingredients } });
 
         // this.setState(() => ({ loading: true }));
 
@@ -125,7 +130,7 @@ class BurgerBuilder extends Component {
                 .map(ingredientKey => ingredients[ingredientKey])
                 .reduce((acc, cv) => acc + cv, 0);
     }
-
+    
     render() {
 
         let modalContentJsx = null;
