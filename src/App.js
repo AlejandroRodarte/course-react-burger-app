@@ -1,15 +1,16 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
 import Layout from './hoc/Layout/Layout';
-import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
-import Checkout from './containers/BurgerBuilder/Checkout/Checkout';
+import AppRouter from './routes/AppRouter';
 
 const App = () => (
   <div>
-    <Layout>
-      <BurgerBuilder />
-      <Checkout />
-    </Layout>
+    <BrowserRouter>
+      <Layout>
+        <AppRouter />
+      </Layout>
+    </BrowserRouter>
   </div>
 );
 
