@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 import BurgerBuilder from '../containers/BurgerBuilder/BurgerBuilder';
 import Checkout from '../containers/Checkout/Checkout';
+import Orders from '../containers/Orders/Orders';
 
 const AppRouter = () => (
     <Switch>
@@ -13,6 +14,10 @@ const AppRouter = () => (
         <Route
             path="/checkout"
             component={ Checkout }
+        />
+        <Route
+            path="/orders"
+            component={ Orders }
         />
         <Redirect
             to="/builder"
