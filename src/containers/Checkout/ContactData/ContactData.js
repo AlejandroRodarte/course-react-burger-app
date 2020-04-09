@@ -12,11 +12,69 @@ class ContactData extends Component {
 
     state = {
         orderForm: {
-            name: this.getInputConfig('input', { type: 'text', placeholder: 'Your Name' }, ''),
-            street: this.getInputConfig('input', { type: 'text', placeholder: 'Street' }, ''),
-            zipCode: this.getInputConfig('input', { type: 'text', placeholder: 'Zip Code' }, ''),
-            country: this.getInputConfig('input', { type: 'text', placeholder: 'Country' }, ''),
-            email: this.getInputConfig('input', { type: 'email', placeholder: 'Your Email' }, ''),
+            name: this.getInputConfig(
+                'input', 
+                { 
+                    type: 'text', 
+                    placeholder: 'Your Name' 
+                }, 
+                '', 
+                { 
+                    required: true 
+                }, 
+                false
+            ),
+            street: this.getInputConfig(
+                'input', 
+                { 
+                    type: 'text', 
+                    placeholder: 'Street' 
+                }, 
+                '', 
+                { 
+                    required: true 
+                },
+                false
+            ),
+            zipCode: this.getInputConfig(
+                'input', 
+                { 
+                    type: 'text', 
+                    placeholder: 'Zip Code' 
+                }, 
+                '', 
+                { 
+                    required: true,
+                    minLength: 5,
+                    maxLength: 5
+                },
+                false
+            ),
+            country: this.getInputConfig(
+                'input', 
+                { 
+                    type: 'text', 
+                    placeholder: 
+                    'Country' 
+                }, 
+                '', 
+                { 
+                    required: true 
+                },
+                false
+            ),
+            email: this.getInputConfig(
+                'input', 
+                { 
+                    type: 'email', 
+                    placeholder: 'Your Email' 
+                }, 
+                '', 
+                { 
+                    required: true 
+                },
+                false
+            ),
             deliveryMethod: this.getInputConfig(
                 'select', 
                 {
@@ -80,18 +138,41 @@ class ContactData extends Component {
                 ...prevState.orderForm,
                 [inputName]: {
                     ...prevState.orderForm[inputName],
-                    value
+                    value,
+                    valid: this.checkValidity(value, prevState.orderForm[inputName].validation)
                 }
             }
         }));
 
     };
 
-    getInputConfig(inputType = 'input', elementConfig = {}, value = '') {
-        return { inputType, elementConfig, value };
+    checkValidity(value, rules) {
+
+        const validations = [];
+
+        if (rules.required) {
+            validations.push(value.trim() !== '');
+        }
+
+        if (rules.minLength) {
+            validations.push(value.length >= rules.minLength);
+        }
+
+        if (rules.maxLength) {
+            validations.push(value.length <= rules.maxLength);
+        }
+
+        return validations.every(validation => validation);
+
+    }
+
+    getInputConfig(inputType = 'input', elementConfig = {}, value = '', validation = {}, valid = false) {
+        return { inputType, elementConfig, value, validation, valid };
     }
 
     render() {
+
+        console.log(this.state.orderForm.zipCode);
 
         const formElementsJsx =
             Object
