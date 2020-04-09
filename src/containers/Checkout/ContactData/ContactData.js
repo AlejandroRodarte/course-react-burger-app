@@ -94,9 +94,12 @@ class ContactData extends Component {
                         }
                     ]
                 },
-                'fastest'
+                'fastest',
+                {},
+                true
             )
         },
+        formIsValid: false,
         loading: false
     };
 
@@ -138,8 +141,9 @@ class ContactData extends Component {
 
         const value = e.target.value;
 
-        this.setState((prevState) => ({ 
-            orderForm: {
+        this.setState((prevState) => {
+
+            const updatedForm = {
                 ...prevState.orderForm,
                 [inputName]: {
                     ...prevState.orderForm[inputName],
@@ -147,8 +151,14 @@ class ContactData extends Component {
                     valid: this.checkValidity(value, prevState.orderForm[inputName].validation),
                     touched: true
                 }
-            }
-        }));
+            };
+
+            return {
+                orderForm: updatedForm,
+                formIsValid: Object.keys(updatedForm).every(inputName => updatedForm[inputName].valid)
+            };
+
+        });
 
     };
 
@@ -178,7 +188,7 @@ class ContactData extends Component {
 
     render() {
 
-        console.log(this.state.orderForm.zipCode);
+        console.log(Object.keys(this.state.orderForm).map(inputName => ({ name: inputName, valid: this.state.orderForm[inputName].valid })));
 
         const formElementsJsx =
             Object
@@ -205,6 +215,7 @@ class ContactData extends Component {
                 <Button 
                     type="Success"
                     clicked={ this.orderHandler }
+                    disabled={ !this.state.formIsValid }
                 >
                     ORDER
                 </Button>

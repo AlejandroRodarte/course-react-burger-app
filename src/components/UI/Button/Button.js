@@ -2,7 +2,7 @@ import React from 'react';
 
 import classes from './Button.module.css';
 
-const Button = ({ clicked, children, type }) => {
+const Button = ({ clicked, children, type, disabled }) => {
 
     const buttonClasses = [classes.Button, classes[type]].join(' ');
 
@@ -10,6 +10,7 @@ const Button = ({ clicked, children, type }) => {
         <button
             onClick={ clicked }
             className={ buttonClasses }
+            disabled={ disabled }
         >
             { children }
         </button>
