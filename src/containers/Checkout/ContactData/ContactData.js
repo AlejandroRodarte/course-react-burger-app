@@ -22,6 +22,7 @@ class ContactData extends Component {
                 { 
                     required: true 
                 }, 
+                false,
                 false
             ),
             street: this.getInputConfig(
@@ -34,6 +35,7 @@ class ContactData extends Component {
                 { 
                     required: true 
                 },
+                false,
                 false
             ),
             zipCode: this.getInputConfig(
@@ -48,6 +50,7 @@ class ContactData extends Component {
                     minLength: 5,
                     maxLength: 5
                 },
+                false,
                 false
             ),
             country: this.getInputConfig(
@@ -61,8 +64,9 @@ class ContactData extends Component {
                 { 
                     required: true 
                 },
+                false,
                 false
-            ),
+            ), 
             email: this.getInputConfig(
                 'input', 
                 { 
@@ -73,6 +77,7 @@ class ContactData extends Component {
                 { 
                     required: true 
                 },
+                false,
                 false
             ),
             deliveryMethod: this.getInputConfig(
@@ -139,7 +144,8 @@ class ContactData extends Component {
                 [inputName]: {
                     ...prevState.orderForm[inputName],
                     value,
-                    valid: this.checkValidity(value, prevState.orderForm[inputName].validation)
+                    valid: this.checkValidity(value, prevState.orderForm[inputName].validation),
+                    touched: true
                 }
             }
         }));
@@ -166,8 +172,8 @@ class ContactData extends Component {
 
     }
 
-    getInputConfig(inputType = 'input', elementConfig = {}, value = '', validation = {}, valid = false) {
-        return { inputType, elementConfig, value, validation, valid };
+    getInputConfig(inputType = 'input', elementConfig = {}, value = '', validation = {}, valid = false, touched = false) {
+        return { inputType, elementConfig, value, validation, valid, touched };
     }
 
     render() {
@@ -186,6 +192,7 @@ class ContactData extends Component {
                             value={ this.state.orderForm[inputName].value }
                             changed={ (e) => this.inputChangedHandler(inputName, e) }
                             invalid={ !this.state.orderForm[inputName].valid }
+                            touched={ this.state.orderForm[inputName].touched }
                             shouldValidate={ Object.keys(this.state.orderForm[inputName].validation).length > 0 }
                         />
                 );

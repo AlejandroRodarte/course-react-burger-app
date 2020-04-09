@@ -2,12 +2,12 @@ import React from 'react';
 
 import classes from './Input.module.css';
 
-const Input = ({ inputType, elementConfig, value, label, changed, invalid, shouldValidate }) => {
+const Input = ({ inputType, elementConfig, value, label, changed, invalid, shouldValidate, touched }) => {
 
     let inputJsx = null;
     const inputClasses = [classes.InputElement];
 
-    if (invalid && shouldValidate) {
+    if (invalid && shouldValidate && touched) {
         inputClasses.push(classes.Invalid);
     }
 
