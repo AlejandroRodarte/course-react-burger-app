@@ -5,10 +5,13 @@ import classes from './Input.module.css';
 const Input = ({ inputType, elementConfig, value, label, changed, invalid, shouldValidate, touched }) => {
 
     let inputJsx = null;
+    let inputErrorJsx = null;
+
     const inputClasses = [classes.InputElement];
 
     if (invalid && shouldValidate && touched) {
         inputClasses.push(classes.Invalid);
+        inputErrorJsx = <p>Invalid value!</p>;
     }
 
     switch (inputType) {
@@ -56,6 +59,7 @@ const Input = ({ inputType, elementConfig, value, label, changed, invalid, shoul
                 { label }
             </label>
             { inputJsx }
+            { inputErrorJsx }
         </div>
     );
 
