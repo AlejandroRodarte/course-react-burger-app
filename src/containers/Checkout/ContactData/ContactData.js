@@ -181,8 +181,12 @@ class ContactData extends Component {
                     inputName => 
                         <Input
                             key={ inputName }
-                            { ...this.state.orderForm[inputName] }
+                            inputType={ this.state.orderForm[inputName].inputType }
+                            elementConfig={ this.state.orderForm[inputName].elementConfig }
+                            value={ this.state.orderForm[inputName].value }
                             changed={ (e) => this.inputChangedHandler(inputName, e) }
+                            invalid={ !this.state.orderForm[inputName].valid }
+                            shouldValidate={ Object.keys(this.state.orderForm[inputName].validation).length > 0 }
                         />
                 );
 
