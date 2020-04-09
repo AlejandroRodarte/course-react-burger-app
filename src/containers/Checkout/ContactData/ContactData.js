@@ -40,22 +40,19 @@ class ContactData extends Component {
     orderHandler = async (e) => {
 
         e.preventDefault();
+
+        const orderData = {};
+
+        for (const inputName in this.state.orderForm) {
+            orderData[inputName] = this.state.orderForm[inputName].value;
+        }
         
         this.setState(() => ({ loading: true }));
 
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.price,
-            customer: {
-                name: 'Alex',
-                address: {
-                    street: 'Test street',
-                    zipCode: '41351',
-                    country: 'Germany'
-                },
-                email: 'test@test.com'
-            },
-            deliveryMethod: 'fastest'
+            orderData
         };
 
         try {
@@ -109,7 +106,7 @@ class ContactData extends Component {
                 );
 
         let formJsx = (
-            <form>
+            <form onSubmit={ this.orderHandler }>
 
                 { formElementsJsx }
 
