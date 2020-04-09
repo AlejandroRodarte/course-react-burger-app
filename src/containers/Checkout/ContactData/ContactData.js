@@ -79,8 +79,21 @@ class ContactData extends Component {
 
     render() {
 
+        const formElementsJsx =
+            Object
+                .keys(this.state.orderForm)
+                .map(
+                    inputName => 
+                        <Input
+                            key={ inputName }
+                            { ...this.state.orderForm[inputName] }
+                        />
+                );
+
         let formJsx = (
             <form>
+
+                { formElementsJsx }
 
                 <Button 
                     type="Success"
