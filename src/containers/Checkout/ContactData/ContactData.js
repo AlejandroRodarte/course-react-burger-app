@@ -30,7 +30,8 @@ class ContactData extends Component {
                             displayValue: 'Cheapest'
                         }
                     ]
-                }
+                },
+                'fastest'
             )
         },
         loading: false
