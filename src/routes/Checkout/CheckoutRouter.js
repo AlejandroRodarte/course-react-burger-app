@@ -3,11 +3,11 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 
 import ContactData from '../../containers/Checkout/ContactData/ContactData';
 
-const CheckoutRouter = ({ match }) => (
+const CheckoutRouter = ({ match, ingredients, price }) => (
     <Switch>
         <Route
             path={ `${match.path}/contact-data` }
-            component={ ContactData }
+            component={ (props) => <ContactData { ...props } ingredients={ ingredients } price={ price } /> }
         />
     </Switch>
 );
