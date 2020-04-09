@@ -11,11 +11,27 @@ import axios from '../../../axios/axios-orders';
 class ContactData extends Component {
 
     state = {
-        name: '',
-        email: '',
-        address: {
-            street: '',
-            postalCode: ''
+        orderForm: {
+            name: this.getInputConfig('input', { type: 'text', placeholder: 'Your Name' }, ''),
+            street: this.getInputConfig('input', { type: 'text', placeholder: 'Street' }, ''),
+            zipCode: this.getInputConfig('input', { type: 'text', placeholder: 'Zip Code' }, ''),
+            country: this.getInputConfig('input', { type: 'text', placeholder: 'Country' }, ''),
+            email: this.getInputConfig('input', { type: 'email', placeholder: 'Your Email' }, ''),
+            deliveryMethod: this.getInputConfig(
+                'select', 
+                {
+                    options: [
+                        {
+                            value: 'fastest',
+                            displayValue: 'Fastest'
+                        },
+                        {
+                            value: 'cheapest',
+                            displayValue: 'Cheapest'
+                        }
+                    ]
+                }
+            )
         },
         loading: false
     };
@@ -57,38 +73,14 @@ class ContactData extends Component {
 
     };
 
+    getInputConfig(inputType = 'input', elementConfig = {}, value = '') {
+        return { inputType, elementConfig, value };
+    }
+
     render() {
 
         let formJsx = (
             <form>
-            
-                <Input
-                    inputType="input"
-                    type="text"
-                    name="name"
-                    placeholder="Your name"
-                />
-
-                <Input
-                    inputType="input"
-                    type="email"
-                    name="email"
-                    placeholder="Your email"
-                />
-                
-                <Input
-                    inputType="input"
-                    type="text"
-                    name="street"
-                    placeholder="Street"
-                />
-
-                <Input
-                    inputType="input"
-                    type="text"
-                    name="postal"
-                    placeholder="Postal Code"
-                />
 
                 <Button 
                     type="Success"
