@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import BurgerBuilder from '../containers/BurgerBuilder/BurgerBuilder';
-import Checkout from '../containers/BurgerBuilder/Checkout/Checkout';
+import Checkout from '../containers/Checkout/Checkout';
 
 const AppRouter = () => (
     <Switch>

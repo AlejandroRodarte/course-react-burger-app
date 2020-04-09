@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
-import CheckoutSummary from '../../../components/Order/CheckoutSummary/CheckoutSummary';
-
-import * as burgerIngredientTypes from '../../../types/burger/burger-ingredient-types';
+import CheckoutRouter from '../../routes/Checkout/CheckoutRouter';
+import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 
 class Checkout extends Component {
 
@@ -30,11 +29,15 @@ class Checkout extends Component {
     render() {
         return (
             <div>
+
                 <CheckoutSummary 
                     ingredients={ this.state.ingredients }
                     checkoutCancelled={ this.checkoutCancelledHandler }
                     checkoutContinued={ this.checkoutContinuedHandler }
                 />
+
+                <CheckoutRouter />
+
             </div>
         );
     }
