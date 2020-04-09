@@ -2,21 +2,36 @@ import React from 'react';
 
 import classes from './Input.module.css';
 
-const Input = ({ inputType, elementConfig, value, label }) => {
+const Input = ({ inputType, elementConfig, value, label, changed }) => {
 
     let inputJsx = null;
 
     switch (inputType) {
 
         case 'input':
-            inputJsx = <input className={ classes.InputElement } { ...elementConfig } value={ value } />;
+            inputJsx = 
+                <input 
+                    className={ classes.InputElement } 
+                    { ...elementConfig } 
+                    value={ value } 
+                    onChange={ changed }
+                />;
             break;
         case 'textarea':
-            inputJsx = <textarea className={ classes.InputElement } { ...elementConfig } value={ value } />;
+            inputJsx = 
+                <textarea 
+                    className={ classes.InputElement } 
+                    { ...elementConfig } 
+                    value={ value }
+                    onChange={ changed }
+                />;
             break;
         case 'select':
             inputJsx = (
-                <select className={ classes.InputElement }>
+                <select 
+                    className={ classes.InputElement }
+                    onChange={ changed }
+                >
                     { 
                         elementConfig
                             .options

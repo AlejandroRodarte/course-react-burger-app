@@ -74,6 +74,22 @@ class ContactData extends Component {
 
     };
 
+    inputChangedHandler = (inputName, e) => {
+
+        const value = e.target.value;
+
+        this.setState((prevState) => ({ 
+            orderForm: {
+                ...prevState.orderForm,
+                [inputName]: {
+                    ...prevState.orderForm[inputName],
+                    value
+                }
+            }
+        }));
+
+    };
+
     getInputConfig(inputType = 'input', elementConfig = {}, value = '') {
         return { inputType, elementConfig, value };
     }
@@ -88,6 +104,7 @@ class ContactData extends Component {
                         <Input
                             key={ inputName }
                             { ...this.state.orderForm[inputName] }
+                            changed={ (e) => this.inputChangedHandler(inputName, e) }
                         />
                 );
 
