@@ -30,7 +30,7 @@ class Checkout extends Component {
             </div>
         );
 
-        if (!this.props.ingredients) {
+        if (!this.props.hasIngredients) {
             jsx = <Redirect to="/builder" />;
         }
 
@@ -42,7 +42,8 @@ class Checkout extends Component {
 
 const mapStateToProps = state => ({
     ingredients: state.builder.ingredients,
-    totalPrice: state.builder.totalPrice
+    totalPrice: state.builder.totalPrice,
+    hasIngredients: !!state.builder.ingredients
 });
 
 export default connect(mapStateToProps, undefined)(Checkout);
