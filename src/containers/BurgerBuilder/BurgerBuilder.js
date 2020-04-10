@@ -30,7 +30,7 @@ class BurgerBuilder extends Component {
                 this.props.onSetIngredients(ingredients);
             } catch (e) {
                 this.setState(() => ({ error: true }));
-                console.log(e);
+                // console.log(e);
             }
         }
 

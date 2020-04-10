@@ -30,7 +30,7 @@ class Orders extends Component {
             this.setState(() => ({ orders, loading: false }));
 
         } catch (e) {
-            console.log(e);
+            // console.log(e);
             this.setState(() => ({ loading: false }));
         }
 

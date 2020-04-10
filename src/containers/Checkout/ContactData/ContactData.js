@@ -126,18 +126,18 @@ class ContactData extends Component {
 
         try {
 
-            const res = await axios.post('/orders.json', order);
+            await axios.post('/orders.json', order);
 
             this.setState(() => ({ loading: false }));
             this.props.onClearBuilder();
 
             this.props.history.replace('/builder');
 
-            console.log(res);
+            // console.log(res);
             
         } catch (e) {
             this.setState(() => ({ loading: false }));
-            console.log(e);
+            // console.log(e);
         }
 
     };
@@ -193,7 +193,7 @@ class ContactData extends Component {
 
     render() {
 
-        console.log(Object.keys(this.state.orderForm).map(inputName => ({ name: inputName, valid: this.state.orderForm[inputName].valid })));
+        // console.log(Object.keys(this.state.orderForm).map(inputName => ({ name: inputName, valid: this.state.orderForm[inputName].valid })));
 
         const formElementsJsx =
             Object
