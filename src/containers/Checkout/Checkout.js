@@ -21,10 +21,7 @@ class Checkout extends Component {
                     checkoutContinued={ this.checkoutContinuedHandler }
                 />
 
-                <CheckoutRouter 
-                    ingredients={ this.props.ingredients }
-                    price={ this.props.totalPrice }
-                />
+                <CheckoutRouter />
 
             </div>
         );
@@ -40,8 +37,6 @@ class Checkout extends Component {
 }
 
 const mapStateToProps = state => ({
-    ingredients: state.builder.ingredients,
-    totalPrice: state.builder.totalPrice,
     hasIngredients: !!state.builder.ingredients
 });
 
