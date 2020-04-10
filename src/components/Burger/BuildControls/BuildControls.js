@@ -8,6 +8,8 @@ import BuildControl from './BuildControl/BuildControl';
 import * as burgerIngredientTypes from '../../../types/burger/burger-ingredient-types';
 import burgerIngredientNames from '../../../utils/burger/burger-ingredient-names'
 
+import getDisabledButtonsInfo from '../../../utils/functions/burger-builder/get-disabled-buttons-info';
+
 const controls = [
     {
         label: burgerIngredientNames[burgerIngredientTypes.SALAD],
@@ -61,7 +63,8 @@ const BuildControls = ({ ingredientAdded, ingredientRemoved, disabled, price, pu
 );
 
 const mapStateToProps = state => ({
-    price: state.builder.totalPrice
+    price: state.builder.totalPrice,
+    disabled: getDisabledButtonsInfo(state.builder.ingredients)
 });
 
 export default connect(mapStateToProps, undefined)(BuildControls);

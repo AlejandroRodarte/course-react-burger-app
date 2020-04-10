@@ -14,7 +14,6 @@ import axios from '../../axios/axios-orders';
 import * as builderActions from '../../store/actions/builder';
 
 import getIngredientsAmount from '../../utils/functions/burger-builder/get-ingredients-amount';
-import getDisabledButtonsInfo from '../../utils/functions/burger-builder/get-disabled-buttons-info';
 
 class BurgerBuilder extends Component {
     
@@ -74,7 +73,6 @@ class BurgerBuilder extends Component {
                     <BuildControls
                         ingredientAdded={ this.addIngredientHandler }
                         ingredientRemoved={ this.removeIngredientHandler }
-                        disabled={ this.props.disabledButtonsInfo }
                         purchaseable={ this.state.purchaseable }
                         ordered={ this.purchaseHandler }
                     /> 
@@ -114,8 +112,7 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => ({
     hasIngredients: Object.keys(state.builder.ingredients).length > 0,
-    ingredientsAmount: getIngredientsAmount(state.builder.ingredients),
-    disabledButtonsInfo: getDisabledButtonsInfo(state.builder.ingredients)
+    ingredientsAmount: getIngredientsAmount(state.builder.ingredients)
 });
 
 const mapDispatchToProps = dispatch => ({
