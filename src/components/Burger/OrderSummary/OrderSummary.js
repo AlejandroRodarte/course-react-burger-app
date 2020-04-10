@@ -1,4 +1,5 @@
 import React, { Fragment, Component } from 'react';
+import { connect } from 'react-redux';
 
 import Button from '../../UI/Button/Button';
 
@@ -62,4 +63,9 @@ class OrderSummary extends Component {
 
 }
 
-export default OrderSummary;
+const mapStateToProps = state => ({
+    ingredients: state.builder.ingredients,
+    price: state.builder.totalPrice
+});
+
+export default connect(mapStateToProps, undefined)(OrderSummary);

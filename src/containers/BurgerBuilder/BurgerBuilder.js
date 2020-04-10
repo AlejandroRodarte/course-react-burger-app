@@ -82,7 +82,6 @@ class BurgerBuilder extends Component {
                     <Burger />
     
                     <BuildControls
-                        price={ this.props.totalPrice }
                         ingredientAdded={ this.addIngredientHandler }
                         ingredientRemoved={ this.removeIngredientHandler }
                         disabled={ disabledButtonsInfo }
@@ -94,10 +93,8 @@ class BurgerBuilder extends Component {
 
             modalContentJsx =
                 <OrderSummary 
-                    ingredients={ this.props.ingredients }
                     purchaseCanceled={ this.purchaseCancelHandler }
                     purchaseContinued={ this.purchaseContinueHandler }
-                    price={ this.props.totalPrice }
                 />;
 
         }

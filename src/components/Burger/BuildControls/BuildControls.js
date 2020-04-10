@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import classes from './BuildControls.module.css';
 
@@ -59,4 +60,8 @@ const BuildControls = ({ ingredientAdded, ingredientRemoved, disabled, price, pu
 
 );
 
-export default BuildControls;
+const mapStateToProps = state => ({
+    price: state.builder.totalPrice
+});
+
+export default connect(mapStateToProps, undefined)(BuildControls);
