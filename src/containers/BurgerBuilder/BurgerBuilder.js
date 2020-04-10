@@ -28,8 +28,7 @@ class BurgerBuilder extends Component {
 
         if (!this.props.hasIngredients) {
             try {
-                const { data: ingredients } = await axios.get('/ingredients.json');
-                this.props.onSetIngredients(ingredients);
+                await this.props.onStartSetIngredients();
             } catch (e) {
                 this.setState(() => ({ error: true }));
                 // console.log(e);
@@ -116,7 +115,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onSetIngredients: (ingredients) => dispatch(builderActions.setIngredients(ingredients)),
+    onStartSetIngredients: () => dispatch(builderActions.startSetIngredients()),
     onAddIngredient: (ingredientName) => dispatch(builderActions.addIngredient(ingredientName)),
     onRemoveIngredient: (ingredientName) => dispatch(builderActions.removeIngredient(ingredientName))
 });

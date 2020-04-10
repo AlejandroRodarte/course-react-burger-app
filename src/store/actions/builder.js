@@ -1,5 +1,14 @@
 import * as BuilderTypes from '../types/builder';
 
+import axios from '../../axios/axios-orders';
+
+export const startSetIngredients = () => async (dispatch) => {
+    try {
+        const { data: ingredients } = await axios.get('/ingredients.json');
+        dispatch(setIngredients(ingredients));
+    } catch (e) { throw e; }
+};
+
 export const setIngredients = (ingredients) => ({
     type: BuilderTypes.SET_INGREDIENTS,
     payload: {
