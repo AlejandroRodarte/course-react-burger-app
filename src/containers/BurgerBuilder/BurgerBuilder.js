@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
@@ -12,6 +13,8 @@ import burgerIngredientPrices from '../../utils/burger/burger-ingredient-prices'
 import parseObjectToQueryParams from '../../utils/functions/parse-object-to-query-params';
 
 import axios from '../../axios/axios-orders';
+
+import * as builderActions from '../../store/actions/builder';
 
 class BurgerBuilder extends Component {
     
@@ -158,4 +161,15 @@ class BurgerBuilder extends Component {
 
 }
 
-export default withErrorHandler(BurgerBuilder, axios);
+const mapStateToProps = state => ({
+    ingredients: state.builder.ingredients,
+    totalPrice: state.builder.totalPrice
+});
+
+const mapDispatchToProps = dispatch => ({
+    onSetIngredients: (ingredients) => dispatch(builderActions.setIngredients(ingredients)),
+    onAddIngredient: (ingredientName) => dispatch(builderActions.addIngredient(ingredientName)),
+    onRemoveIngredient: (ingredientName) => dispatch(builderActions.removeIngredient(ingredientName))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, axios));
