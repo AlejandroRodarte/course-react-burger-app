@@ -1,9 +1,11 @@
 import { createStore, combineReducers, compose } from 'redux';
 
 import builderReducer from './reducers/builder';
+import ordersReducer from './reducers/orders';
 
 const rootReducer = combineReducers({
-    builder: builderReducer
+    builder: builderReducer,
+    orders: ordersReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

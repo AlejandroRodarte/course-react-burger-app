@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Order from '../../components/Order/Order';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 import axios from '../../axios/axios-orders';
 
+import * as ordersActions from '../../store/actions/orders';
+
 class Orders extends Component {
 
     state = {
-        orders: [],
         loading: true
     };
 
@@ -27,7 +29,8 @@ class Orders extends Component {
                 });
             }
 
-            this.setState(() => ({ orders, loading: false }));
+            this.props.onSetOrders(orders);
+            this.setState(() => ({ loading: false }));
 
         } catch (e) {
             // console.log(e);
@@ -38,7 +41,7 @@ class Orders extends Component {
 
     render() {
 
-        const ordersJsx = this.state.orders.map((order) => <Order key={ order.id } ingredients={ order.ingredients } price={ order.price } />);
+        const ordersJsx = this.props.orders.map((order) => <Order key={ order.id } ingredients={ order.ingredients } price={ order.price } />);
 
         return (
             <div>
@@ -50,4 +53,12 @@ class Orders extends Component {
 
 }
 
-export default withErrorHandler(Orders, axios);
+const mapStateToProps = state => ({
+    orders: state.orders.orders
+});
+
+const mapDispatchToProps = dispatch => ({
+    onSetOrders: (orders) => dispatch(ordersActions.setOrders(orders))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));
