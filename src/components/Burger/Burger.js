@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import classes from './Burger.module.css';
 import * as burgerIngredientTypes from '../../types/burger/burger-ingredient-types';
@@ -33,4 +34,8 @@ const Burger = ({ ingredients }) => {
 
 }
 
-export default Burger;
+const mapStateToProps = state => ({
+    ingredients: state.builder.ingredients
+});
+
+export default connect(mapStateToProps, undefined)(Burger);

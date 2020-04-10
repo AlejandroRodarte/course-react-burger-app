@@ -79,7 +79,7 @@ class BurgerBuilder extends Component {
 
             mainContentJsx = (
                 <Fragment>
-                    <Burger ingredients={ this.props.ingredients } />
+                    <Burger />
     
                     <BuildControls
                         price={ this.props.totalPrice }

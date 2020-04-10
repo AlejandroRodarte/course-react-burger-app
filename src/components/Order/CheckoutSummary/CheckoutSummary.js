@@ -5,7 +5,7 @@ import Button from '../../UI/Button/Button';
 
 import classes from './CheckoutSummary.module.css';
 
-const CheckoutSummary = ({ ingredients, checkoutCancelled, checkoutContinued }) => (
+const CheckoutSummary = ({ checkoutCancelled, checkoutContinued }) => (
     <div className={ classes.CheckoutSummary }>
 
         <h1>
@@ -13,7 +13,7 @@ const CheckoutSummary = ({ ingredients, checkoutCancelled, checkoutContinued }) 
         </h1>
 
         <div style={ { width: '100%', margin: 'auto', textAlign: 'center' } }>
-            <Burger ingredients={ ingredients }/>
+            <Burger />
         </div>
 
         <Button 
