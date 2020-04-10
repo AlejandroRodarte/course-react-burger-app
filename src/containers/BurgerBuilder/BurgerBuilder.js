@@ -123,8 +123,7 @@ class BurgerBuilder extends Component {
 }
 
 const mapStateToProps = state => ({
-    ingredients: state.builder.ingredients,
-    totalPrice: state.builder.totalPrice
+    ingredients: state.builder.ingredients
 });
 
 const mapDispatchToProps = dispatch => ({
