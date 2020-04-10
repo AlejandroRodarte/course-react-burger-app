@@ -20,3 +20,7 @@ export const removeIngredient = (ingredientName) => ({
         ingredientName
     }
 });
+
+export const clearBuilder = () => ({
+    type: BuilderTypes.CLEAR_BUILDER
+});

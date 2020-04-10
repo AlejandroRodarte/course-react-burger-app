@@ -9,6 +9,8 @@ import Input from '../../../components/UI/Input/Input';
 
 import axios from '../../../axios/axios-orders';
 
+import * as builderActions from '../../../store/actions/builder';
+
 class ContactData extends Component {
 
     state = {
@@ -127,6 +129,8 @@ class ContactData extends Component {
             const res = await axios.post('/orders.json', order);
 
             this.setState(() => ({ loading: false }));
+            this.props.onClearBuilder();
+
             this.props.history.replace('/builder');
 
             console.log(res);
@@ -249,4 +253,8 @@ const mapStateToProps = state => ({
     price: state.builder.totalPrice
 });
 
-export default connect(mapStateToProps, undefined)(ContactData);
+const mapDispatchToProps = dispatch => ({
+    onClearBuilder: () => dispatch(builderActions.clearBuilder())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactData);

@@ -37,6 +37,19 @@ export default function(state = initialState, action) {
                 totalPrice: state.ingredients[action.payload.ingredientName] <= 0 ? state.totalPrice : state.totalPrice - burgerIngredientPrices[action.payload.ingredientName],
             };
     
+        case BuilderTypes.CLEAR_BUILDER:
+
+            const newIngredients = { ...state.ingredients };
+
+            for (const ingredientName in newIngredients) {
+                newIngredients[ingredientName] = 0;
+            }
+
+            return {
+                ...state,
+                ingredients: newIngredients,
+                totalPrice: 4
+            };
 
         default:
             return state;
