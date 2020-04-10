@@ -37,7 +37,7 @@ class Checkout extends Component {
 }
 
 const mapStateToProps = state => ({
-    hasIngredients: !!state.builder.ingredients
+    hasIngredients: Object.keys(state.builder.ingredients).length > 0
 });
 
 export default connect(mapStateToProps, undefined)(Checkout);

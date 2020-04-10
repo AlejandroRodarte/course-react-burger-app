@@ -13,6 +13,9 @@ import axios from '../../axios/axios-orders';
 
 import * as builderActions from '../../store/actions/builder';
 
+import getIngredientsAmount from '../../utils/functions/burger-builder/get-ingredients-amount';
+import getDisabledButtonsInfo from '../../utils/functions/burger-builder/get-disabled-buttons-info';
+
 class BurgerBuilder extends Component {
     
     state = {
@@ -24,7 +27,7 @@ class BurgerBuilder extends Component {
 
     async componentDidMount() {
 
-        if (!this.props.ingredients) {
+        if (!this.props.hasIngredients) {
             try {
                 const { data: ingredients } = await axios.get('/ingredients.json');
                 this.props.onSetIngredients(ingredients);
@@ -38,12 +41,12 @@ class BurgerBuilder extends Component {
 
     addIngredientHandler = (type) => {
         this.props.onAddIngredient(type);
-        this.setState(() => ({ purchaseable: this.getIngredientAmount(this.props.ingredients) + 1 > 0 }));
+        this.setState(() => ({ purchaseable: this.props.ingredientsAmount + 1 > 0 }));
     };
 
     removeIngredientHandler = (type) => {
         this.props.onRemoveIngredient(type);
-        this.setState(() => ({ purchaseable: this.getIngredientAmount(this.props.ingredients) + 1 > 0 }));
+        this.setState(() => ({ purchaseable: this.props.ingredientsAmount + 1 > 0 }));
     };
 
     purchaseHandler = () => {
@@ -55,13 +58,6 @@ class BurgerBuilder extends Component {
     };
 
     purchaseContinueHandler = () => this.props.history.push('/checkout');
-
-    getIngredientAmount(ingredients) {
-        return Object
-                .keys(ingredients)
-                .map(ingredientKey => ingredients[ingredientKey])
-                .reduce((acc, cv) => acc + cv, 0);
-    }
     
     render() {
 
@@ -69,13 +65,7 @@ class BurgerBuilder extends Component {
 
         let mainContentJsx = this.state.error ? <p>Ingredients not loaded!</p> : <Spinner />;
 
-        if (this.props.ingredients) {
-
-            const disabledButtonsInfo = {};
-
-            Object
-                .keys(this.props.ingredients)
-                .forEach((ingredientKey) => disabledButtonsInfo[ingredientKey] = this.props.ingredients[ingredientKey] <= 0);
+        if (this.props.hasIngredients) {
 
             mainContentJsx = (
                 <Fragment>
@@ -84,7 +74,7 @@ class BurgerBuilder extends Component {
                     <BuildControls
                         ingredientAdded={ this.addIngredientHandler }
                         ingredientRemoved={ this.removeIngredientHandler }
-                        disabled={ disabledButtonsInfo }
+                        disabled={ this.props.disabledButtonsInfo }
                         purchaseable={ this.state.purchaseable }
                         ordered={ this.purchaseHandler }
                     /> 
@@ -123,7 +113,9 @@ class BurgerBuilder extends Component {
 }
 
 const mapStateToProps = state => ({
-    ingredients: state.builder.ingredients
+    hasIngredients: Object.keys(state.builder.ingredients).length > 0,
+    ingredientsAmount: getIngredientsAmount(state.builder.ingredients),
+    disabledButtonsInfo: getDisabledButtonsInfo(state.builder.ingredients)
 });
 
 const mapDispatchToProps = dispatch => ({

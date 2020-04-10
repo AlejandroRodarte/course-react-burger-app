@@ -3,7 +3,7 @@ import * as BuilderTypes from '../types/builder';
 import burgerIngredientPrices from '../../utils/burger/burger-ingredient-prices';
 
 const initialState = {
-    ingredients: null,
+    ingredients: {},
     totalPrice: 4
 };
 
