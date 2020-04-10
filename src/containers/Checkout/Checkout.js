@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import CheckoutRouter from '../../routes/Checkout/CheckoutRouter';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
@@ -11,7 +12,8 @@ class Checkout extends Component {
     checkoutContinuedHandler = () => this.props.history.replace('/checkout/contact-data');
 
     render() {
-        return (
+
+        let jsx = (
             <div>
 
                 <CheckoutSummary 
@@ -27,6 +29,13 @@ class Checkout extends Component {
 
             </div>
         );
+
+        if (!this.props.ingredients) {
+            jsx = <Redirect to="/builder" />;
+        }
+
+        return jsx;
+
     }
 
 }
