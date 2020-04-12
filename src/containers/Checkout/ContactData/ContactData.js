@@ -53,7 +53,8 @@ class ContactData extends Component {
                 { 
                     required: true,
                     minLength: 5,
-                    maxLength: 5
+                    maxLength: 5,
+                    isNumeric: true
                 },
                 false,
                 false
@@ -80,7 +81,8 @@ class ContactData extends Component {
                 }, 
                 '', 
                 { 
-                    required: true 
+                    required: true,
+                    isEmail: true
                 },
                 false,
                 false
@@ -175,6 +177,16 @@ class ContactData extends Component {
 
         if (rules.maxLength) {
             isValid = value.length <= rules.maxLength && isValid;
+        }
+
+        if (rules.isEmail) {
+            const pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+            isValid = pattern.test(value) && isValid;
+        }
+
+        if (rules.isNumeric) {
+            const pattern = /^\d+$/;
+            isValid = pattern.test(value) && isValid;
         }
 
         return isValid;
