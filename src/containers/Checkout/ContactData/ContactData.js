@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import classes from './ContactData.module.css'; 
@@ -104,70 +104,72 @@ const controls = {
     }
 };
 
-class ContactData extends Component {
+const ContactData = ({ 
+    price, 
+    ingredients, 
+    getFormValues, 
+    onStartAddOrder, 
+    onClearBuilder, 
+    history, 
+    loading, 
+    formElementsJsx, 
+    isFormValid 
+}) => {
 
-    orderHandler = async (e) => {
+    const orderHandler = async (e) => {
 
         e.preventDefault();
 
-        const orderData = this.props.getFormValues();
+        const orderData = getFormValues();
 
         const order = {
-            ingredients: this.props.ingredients,
-            price: this.props.price,
+            ingredients: ingredients,
+            price: price,
             orderData
         };
 
         try {
 
-            await this.props.onStartAddOrder(order);
-            this.props.onClearBuilder();
+            await onStartAddOrder(order);
+            onClearBuilder();
 
-            this.props.history.replace('/builder');
-
-            // console.log(res);
+            history.replace('/builder');
             
         } catch (e) { }
 
     };
 
-    render() {
+    let formJsx = (
+        <form onSubmit={ orderHandler }>
 
-        // console.log(Object.keys(this.state.orderForm).map(inputName => ({ name: inputName, valid: this.state.orderForm[inputName].valid })));
+            { formElementsJsx }
 
-        let formJsx = (
-            <form onSubmit={ this.orderHandler }>
+            <Button 
+                type="Success"
+                clicked={ orderHandler }
+                disabled={ !isFormValid }
+            >
+                ORDER
+            </Button>
 
-                { this.props.formElementsJsx }
+        </form>
+    );
 
-                <Button 
-                    type="Success"
-                    clicked={ this.orderHandler }
-                    disabled={ !this.props.isFormValid }
-                >
-                    ORDER
-                </Button>
-
-            </form>
-        );
-
-        if (this.props.loading) {
-            formJsx = <Spinner />;
-        }
-
-        return (
-            <div className={ classes.ContactData }>
-
-                <h4>
-                    Enter your contact data
-                </h4>
-
-                { formJsx }
-
-            </div>
-        );
-
+    if (loading) {
+        formJsx = <Spinner />;
     }
+
+    return (
+        <div className={ classes.ContactData }>
+
+            <h4>
+                Enter your contact data
+            </h4>
+
+            { formJsx }
+
+        </div>
+    );
 
 }
 
