@@ -7,6 +7,10 @@ import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+
+import axios from '../../../axios/axios-orders';
+
 import * as actions from '../../../store/actions';
 
 class ContactData extends Component {
@@ -256,4 +260,4 @@ const mapDispatchToProps = dispatch => ({
     onStartAddOrder: (order) => dispatch(actions.startAddOrder(order))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactData);
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));
