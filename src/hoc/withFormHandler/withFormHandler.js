@@ -64,6 +64,18 @@ const withFormHandler = (WrappedComponent, controls) => class extends Component 
 
     }
 
+    getFormValues = () => {
+
+        const formValues = {};
+
+        for (const inputName in this.state.controls) {
+            formValues[inputName] = this.state.controls[inputName].value;
+        }
+
+        return formValues;
+
+    };
+
     render() {
 
         const formElementsJsx =
@@ -88,6 +100,7 @@ const withFormHandler = (WrappedComponent, controls) => class extends Component 
                 { ...this.props }
                 formElementsJsx={ formElementsJsx }
                 isFormValid={ this.state.isFormValid }
+                getFormValues={ this.getFormValues }
             />
         );
 
