@@ -24,7 +24,7 @@ const addOrderFail = (state, action) => updateState(state, {
     loading: false
 });
 
-const setLoading = (state) => updateState(state, {
+const setOrdersLoading = (state) => updateState(state, {
     loading: true
 });
 
@@ -52,8 +52,8 @@ export default function(state = initialState, action) {
         case types.ADD_ORDER_FAIL:
             return addOrderFail(state, action);
 
-        case types.SET_LOADING:
-            return setLoading(state);
+        case types.SET_ORDERS_LOADING:
+            return setOrdersLoading(state);
 
         case types.SET_ORDERS_FAIL:
             return setOrdersFail(state, action);

@@ -1,10 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Button from '../../components/UI/Button/Button';
 
 import withFormHandler from '../../hoc/withFormHandler/withFormHandler';
 
 import classes from './Auth.module.css';
+
+import * as actions from '../../store/actions';
 
 const controls = {
     email: {
@@ -37,21 +40,38 @@ const controls = {
     }
 };
 
-const Auth = ({ formElementsJsx, isFormValid }) => (
-    <div className={ classes.Auth }>
-        <form>
+const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues }) => {
 
-            { formElementsJsx }
+    const submitHandler = (e) => {
 
-            <Button 
-                type="Success"
-                disabled={ !isFormValid }
-            >
-                SUBMIT
-            </Button>
+        e.preventDefault();
+        const credentials = getFormValues();
 
-        </form>
-    </div>
-);
+        onStartSetAuth(credentials);
 
-export default withFormHandler(Auth, controls);
+    };
+
+    return (
+        <div className={ classes.Auth }>
+            <form onSubmit={ submitHandler }>
+    
+                { formElementsJsx }
+    
+                <Button 
+                    type="Success"
+                    disabled={ !isFormValid }
+                >
+                    SUBMIT
+                </Button>
+    
+            </form>
+        </div>
+    );
+
+}
+
+const mapDispatchToProps = dispatch => ({
+    onStartSetAuth: (credentials) => dispatch(actions.startSetAuth(credentials))
+});
+
+export default connect(undefined, mapDispatchToProps)(withFormHandler(Auth, controls));

@@ -11,3 +11,7 @@ export {
     setOrders, 
     startAddOrder
 } from './orders';
+
+export {
+    startSetAuth
+} from './auth';

@@ -11,6 +11,12 @@ export {
     SET_ORDERS,
     ADD_ORDER,
     ADD_ORDER_FAIL,
-    SET_LOADING,
+    SET_ORDERS_LOADING,
     SET_ORDERS_FAIL
 } from './orders';
+
+export {
+    SET_AUTH,
+    AUTH_FAIL,
+    SET_AUTH_LOADING
+} from './auth';
