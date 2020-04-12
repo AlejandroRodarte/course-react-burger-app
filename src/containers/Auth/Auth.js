@@ -1,9 +1,41 @@
 import React, { Component } from 'react';
 
-import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 
+import withFormHandler from '../../hoc/withFormHandler/withFormHandler';
+
 import classes from './Auth.module.css';
+
+const controls = {
+    email: {
+        inputType: 'input',
+        elementConfig: { 
+            type: 'email', 
+            placeholder: 'Your Email' 
+        },
+        value: '',
+        validation: { 
+            required: true,
+            isEmail: true
+        },
+        valid: false,
+        touched: false
+    },
+    password: {
+        inputType: 'input',
+        elementConfig: { 
+            type: 'password', 
+            placeholder: 'Your Password' 
+        },
+        value: '',
+        validation: { 
+            required: true,
+            minLength: 7
+        },
+        valid: false,
+        touched: false
+    }
+};
 
 class Auth extends Component {
 
@@ -116,32 +148,15 @@ class Auth extends Component {
 
     render() {
 
-        const formElementsJsx =
-            Object
-                .keys(this.state.controls)
-                .map(
-                    inputName => 
-                        <Input
-                            key={ inputName }
-                            inputType={ this.state.controls[inputName].inputType }
-                            elementConfig={ this.state.controls[inputName].elementConfig }
-                            value={ this.state.controls[inputName].value }
-                            changed={ (e) => this.inputChangedHandler(inputName, e) }
-                            invalid={ !this.state.controls[inputName].valid }
-                            touched={ this.state.controls[inputName].touched }
-                            shouldValidate={ Object.keys(this.state.controls[inputName].validation).length > 0 }
-                        />
-                );
-
         return (
             <div className={ classes.Auth }>
                 <form>
 
-                    { formElementsJsx }
+                    { this.props.formElementsJsx }
 
                     <Button 
                         type="Success"
-                        disabled={ !this.state.formIsValid }
+                        disabled={ !this.props.isFormValid }
                     >
                         SUBMIT
                     </Button>
@@ -154,4 +169,4 @@ class Auth extends Component {
 
 }
 
-export default Auth;
+export default withFormHandler(Auth, controls);
