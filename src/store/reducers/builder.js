@@ -5,7 +5,8 @@ import burgerIngredientPrices from '../../utils/burger/burger-ingredient-prices'
 import updateState from '../../utils/functions/store/update-state';
 
 const setIngredients = (state, action) => updateState(state, {
-    ingredients: action.payload.ingredients
+    ingredients: action.payload.ingredients,
+    error: false
 });
 
 const addIngredient = (state, action) => updateState(state, {
@@ -37,9 +38,14 @@ const clearBuilder = (state) => {
 
 };
 
+const fetchIngredientsFail = (state) => updateState(state, {
+    error: true
+});
+
 const initialState = {
     ingredients: {},
-    totalPrice: 4
+    totalPrice: 4,
+    error: false
 };
 
 export default function(state = initialState, action) {
@@ -57,6 +63,9 @@ export default function(state = initialState, action) {
     
         case types.CLEAR_BUILDER:
             return clearBuilder(state);
+
+        case types.FETCH_INGREDIENTS_FAIL:
+            return fetchIngredientsFail(state);
 
         default:
             return state;

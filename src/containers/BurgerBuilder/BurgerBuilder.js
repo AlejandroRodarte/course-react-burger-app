@@ -20,8 +20,7 @@ class BurgerBuilder extends Component {
     state = {
         purchaseable: false,
         purchasing: false,
-        loading: false,
-        error: false
+        loading: false
     };
 
     async componentDidMount() {
@@ -29,10 +28,7 @@ class BurgerBuilder extends Component {
         if (!this.props.hasIngredients) {
             try {
                 await this.props.onStartSetIngredients();
-            } catch (e) {
-                this.setState(() => ({ error: true }));
-                // console.log(e);
-            }
+            } catch (e) { }
         }
 
     }
@@ -61,7 +57,7 @@ class BurgerBuilder extends Component {
 
         let modalContentJsx = null;
 
-        let mainContentJsx = this.state.error ? <p>Ingredients not loaded!</p> : <Spinner />;
+        let mainContentJsx = this.props.error ? <p>Ingredients not loaded!</p> : <Spinner />;
 
         if (this.props.hasIngredients) {
 
@@ -111,7 +107,8 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => ({
     hasIngredients: Object.keys(state.builder.ingredients).length > 0,
-    ingredientsAmount: getIngredientsAmount(state.builder.ingredients)
+    ingredientsAmount: getIngredientsAmount(state.builder.ingredients),
+    error: state.builder.error
 });
 
 const mapDispatchToProps = dispatch => ({

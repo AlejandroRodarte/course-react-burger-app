@@ -6,8 +6,14 @@ export const startSetIngredients = () => async (dispatch) => {
     try {
         const { data: ingredients } = await axios.get('/ingredients.json');
         dispatch(setIngredients(ingredients));
-    } catch (e) { throw e; }
+    } catch (e) {
+        dispatch(fetchIngredientsFail());
+    }
 };
+
+export const fetchIngredientsFail = () => ({
+    type: types.FETCH_INGREDIENTS_FAIL
+});
 
 export const setIngredients = (ingredients) => ({
     type: types.SET_INGREDIENTS,
