@@ -17,23 +17,9 @@ class Orders extends Component {
     async componentDidMount() {
 
         try {
-
-            const { data } = await axios.get('/orders.json');
-
-            const orders = [];
-
-            for (const key in data) {
-                orders.push({
-                    id: key,
-                    ...data[key]
-                });
-            }
-
-            this.props.onSetOrders(orders);
+            await this.props.onStartSetOrders();
             this.setState(() => ({ loading: false }));
-
         } catch (e) {
-            // console.log(e);
             this.setState(() => ({ loading: false }));
         }
 
@@ -58,7 +44,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onSetOrders: (orders) => dispatch(ordersActions.setOrders(orders))
-})
+    onStartSetOrders: () => dispatch(ordersActions.startSetOrders())
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));
