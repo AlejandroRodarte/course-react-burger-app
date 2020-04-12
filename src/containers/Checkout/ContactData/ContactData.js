@@ -7,9 +7,8 @@ import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 
-import axios from '../../../axios/axios-orders';
-
 import * as builderActions from '../../../store/actions/builder';
+import * as ordersActions from '../../../store/actions/orders';
 
 class ContactData extends Component {
 
@@ -126,7 +125,7 @@ class ContactData extends Component {
 
         try {
 
-            await axios.post('/orders.json', order);
+            await this.props.onStartAddOrder(order);
 
             this.setState(() => ({ loading: false }));
             this.props.onClearBuilder();
@@ -254,7 +253,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onClearBuilder: () => dispatch(builderActions.clearBuilder())
+    onClearBuilder: () => dispatch(builderActions.clearBuilder()),
+    onStartAddOrder: (order) => dispatch(ordersActions.startAddOrder(order))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactData);

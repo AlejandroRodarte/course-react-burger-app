@@ -29,3 +29,5 @@ export const setOrders = (orders) => ({
         orders
     }
 });
+
+export const startAddOrder = (order) => async () => await axios.post('/orders.json', order);
