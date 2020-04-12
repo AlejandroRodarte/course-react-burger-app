@@ -104,8 +104,7 @@ class ContactData extends Component {
                 true
             )
         },
-        formIsValid: false,
-        loading: false
+        formIsValid: false
     };
 
     orderHandler = async (e) => {
@@ -117,8 +116,6 @@ class ContactData extends Component {
         for (const inputName in this.state.orderForm) {
             orderData[inputName] = this.state.orderForm[inputName].value;
         }
-        
-        this.setState(() => ({ loading: true }));
 
         const order = {
             ingredients: this.props.ingredients,
@@ -129,18 +126,13 @@ class ContactData extends Component {
         try {
 
             await this.props.onStartAddOrder(order);
-
-            this.setState(() => ({ loading: false }));
             this.props.onClearBuilder();
 
             this.props.history.replace('/builder');
 
             // console.log(res);
             
-        } catch (e) {
-            this.setState(() => ({ loading: false }));
-            // console.log(e);
-        }
+        } catch (e) { }
 
     };
 
@@ -230,7 +222,7 @@ class ContactData extends Component {
             </form>
         );
 
-        if (this.state.loading) {
+        if (this.props.loading) {
             formJsx = <Spinner />;
         }
 
@@ -252,7 +244,8 @@ class ContactData extends Component {
 
 const mapStateToProps = state => ({
     ingredients: state.builder.ingredients,
-    price: state.builder.totalPrice
+    price: state.builder.totalPrice,
+    loading: state.orders.loading
 });
 
 const mapDispatchToProps = dispatch => ({

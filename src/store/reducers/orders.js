@@ -14,16 +14,23 @@ const addOrder = (state, action) => updateState(state, {
             ...action.payload.order
         }
     ],
-    error: null
+    error: null,
+    loading: false
 });
 
 const addOrderFail = (state, action) => updateState(state, {
-    error: action.payload.error
+    error: action.payload.error,
+    loading: false
+});
+
+const setLoading = (state) => updateState(state, {
+    loading: true
 });
 
 const initialState = {
     orders: [],
-    error: null
+    error: null,
+    loading: false
 };
 
 export default function(state = initialState, action) {
@@ -38,6 +45,9 @@ export default function(state = initialState, action) {
 
         case types.ADD_ORDER_FAIL:
             return addOrderFail(state, action);
+
+        case types.SET_LOADING:
+            return setLoading(state);
 
         default:
             return state;

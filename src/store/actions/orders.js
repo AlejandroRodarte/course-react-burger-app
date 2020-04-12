@@ -32,6 +32,7 @@ export const setOrders = (orders) => ({
 
 export const startAddOrder = (order) => async (dispatch) => {
     try {
+        dispatch(setLoading());
         const { data } = await axios.post('/orders.json', order);
         dispatch(addOrder(data.name, order));
     } catch (e) {
@@ -53,4 +54,8 @@ export const addOrderFail = (error) => ({
     payload: {
         error
     }
+});
+
+export const setLoading = () => ({
+    type: types.SET_LOADING
 });
