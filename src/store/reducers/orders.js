@@ -3,7 +3,8 @@ import * as types from '../types';
 import updateState from '../../utils/functions/store/update-state';
 
 const setOrders = (state, action) => updateState(state, {
-    orders: action.payload.orders
+    orders: action.payload.orders,
+    loading: false
 });
 
 const addOrder = (state, action) => updateState(state, {
@@ -27,6 +28,11 @@ const setLoading = (state) => updateState(state, {
     loading: true
 });
 
+const setOrdersFail = (state, action) => updateState(state, {
+    error: action.payload.error,
+    loading: false
+});
+
 const initialState = {
     orders: [],
     error: null,
@@ -48,6 +54,9 @@ export default function(state = initialState, action) {
 
         case types.SET_LOADING:
             return setLoading(state);
+
+        case types.SET_ORDERS_FAIL:
+            return setOrdersFail(state, action);
 
         default:
             return state;

@@ -6,6 +6,8 @@ export const startSetOrders = () => async (dispatch) => {
 
     try {
 
+        dispatch(setLoading());
+
         const { data } = await axios.get('/orders.json');
 
         const orders = [];
@@ -19,7 +21,9 @@ export const startSetOrders = () => async (dispatch) => {
 
         dispatch(setOrders(orders));
 
-    } catch (e) { throw e; }
+    } catch (e) {
+        dispatch(setOrdersFail(e));
+    }
 
 };
 
@@ -58,4 +62,11 @@ export const addOrderFail = (error) => ({
 
 export const setLoading = () => ({
     type: types.SET_LOADING
+});
+
+export const setOrdersFail = (error) => ({
+    type: types.SET_ORDERS_FAIL,
+    payload: {
+        error
+    }
 });

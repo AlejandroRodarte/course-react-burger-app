@@ -11,5 +11,6 @@ export {
     SET_ORDERS,
     ADD_ORDER,
     ADD_ORDER_FAIL,
-    SET_LOADING
+    SET_LOADING,
+    SET_ORDERS_FAIL
 } from './orders';

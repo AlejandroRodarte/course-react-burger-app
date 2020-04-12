@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Order from '../../components/Order/Order';
+import Spinner from '../../components/UI/Spinner/Spinner';
+
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 import axios from '../../axios/axios-orders';
@@ -10,19 +12,12 @@ import * as actions from '../../store/actions';
 
 class Orders extends Component {
 
-    state = {
-        loading: true
-    };
-
     async componentDidMount() {
 
         if (this.props.orders.length === 0) {
             try {
                 await this.props.onStartSetOrders();
-                this.setState(() => ({ loading: false }));
-            } catch (e) {
-                this.setState(() => ({ loading: false }));
-            }
+            } catch (e) { }
         }
 
     }
@@ -33,6 +28,7 @@ class Orders extends Component {
 
         return (
             <div>
+                { this.props.loading && <Spinner /> }
                 { ordersJsx }
             </div>
         );
@@ -42,7 +38,8 @@ class Orders extends Component {
 }
 
 const mapStateToProps = state => ({
-    orders: state.orders.orders
+    orders: state.orders.orders,
+    loading: state.orders.loading
 });
 
 const mapDispatchToProps = dispatch => ({
