@@ -30,4 +30,27 @@ export const setOrders = (orders) => ({
     }
 });
 
-export const startAddOrder = (order) => async () => await axios.post('/orders.json', order);
+export const startAddOrder = (order) => async (dispatch) => {
+    try {
+        const { data } = await axios.post('/orders.json', order);
+        dispatch(addOrder(data.name, order));
+    } catch (e) {
+        dispatch(addOrderFail(e));
+        throw e;
+    }
+}
+
+export const addOrder = (id, order) => ({
+    type: types.ADD_ORDER,
+    payload: {
+        id,
+        order
+    }
+});
+
+export const addOrderFail = (error) => ({
+    type: types.ADD_ORDER_FAIL,
+    payload: {
+        error
+    }
+});

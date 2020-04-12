@@ -8,5 +8,7 @@ export {
 
 export {
     START_SET_ORDERS,
-    SET_ORDERS
+    SET_ORDERS,
+    ADD_ORDER,
+    ADD_ORDER_FAIL
 } from './orders';

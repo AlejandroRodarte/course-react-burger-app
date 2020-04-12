@@ -16,11 +16,13 @@ class Orders extends Component {
 
     async componentDidMount() {
 
-        try {
-            await this.props.onStartSetOrders();
-            this.setState(() => ({ loading: false }));
-        } catch (e) {
-            this.setState(() => ({ loading: false }));
+        if (this.props.orders.length === 0) {
+            try {
+                await this.props.onStartSetOrders();
+                this.setState(() => ({ loading: false }));
+            } catch (e) {
+                this.setState(() => ({ loading: false }));
+            }
         }
 
     }

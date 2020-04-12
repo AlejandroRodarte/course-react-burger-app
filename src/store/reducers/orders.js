@@ -6,8 +6,24 @@ const setOrders = (state, action) => updateState(state, {
     orders: action.payload.orders
 });
 
+const addOrder = (state, action) => updateState(state, {
+    orders: [
+        ...state.orders,
+        {
+            id: action.payload.id,
+            ...action.payload.order
+        }
+    ],
+    error: null
+});
+
+const addOrderFail = (state, action) => updateState(state, {
+    error: action.payload.error
+});
+
 const initialState = {
-    orders: []
+    orders: [],
+    error: null
 };
 
 export default function(state = initialState, action) {
@@ -16,6 +32,12 @@ export default function(state = initialState, action) {
 
         case types.SET_ORDERS:
             return setOrders(state, action);
+
+        case types.ADD_ORDER:
+            return addOrder(state, action);
+
+        case types.ADD_ORDER_FAIL:
+            return addOrderFail(state, action);
 
         default:
             return state;
