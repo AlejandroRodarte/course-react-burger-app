@@ -1,4 +1,4 @@
-import * as OrderTypes from '../types/orders';
+import * as types from '../types';
 
 import axios from '../../axios/axios-orders';
 
@@ -24,7 +24,7 @@ export const startSetOrders = () => async (dispatch) => {
 };
 
 export const setOrders = (orders) => ({
-    type: OrderTypes.SET_ORDERS,
+    type: types.SET_ORDERS,
     payload: {
         orders
     }

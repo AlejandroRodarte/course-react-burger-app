@@ -6,7 +6,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 import axios from '../../axios/axios-orders';
 
-import * as ordersActions from '../../store/actions/orders';
+import * as actions from '../../store/actions';
 
 class Orders extends Component {
 
@@ -44,7 +44,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onStartSetOrders: () => dispatch(ordersActions.startSetOrders())
+    onStartSetOrders: () => dispatch(actions.startSetOrders())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));

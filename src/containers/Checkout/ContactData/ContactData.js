@@ -7,8 +7,7 @@ import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 
-import * as builderActions from '../../../store/actions/builder';
-import * as ordersActions from '../../../store/actions/orders';
+import * as actions from '../../../store/actions';
 
 class ContactData extends Component {
 
@@ -253,8 +252,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onClearBuilder: () => dispatch(builderActions.clearBuilder()),
-    onStartAddOrder: (order) => dispatch(ordersActions.startAddOrder(order))
+    onClearBuilder: () => dispatch(actions.clearBuilder()),
+    onStartAddOrder: (order) => dispatch(actions.startAddOrder(order))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactData);

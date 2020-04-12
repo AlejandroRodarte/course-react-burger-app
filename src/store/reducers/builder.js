@@ -1,4 +1,4 @@
-import * as BuilderTypes from '../types/builder';
+import * as types from '../types';
 
 import burgerIngredientPrices from '../../utils/burger/burger-ingredient-prices';
 
@@ -11,13 +11,13 @@ export default function(state = initialState, action) {
 
     switch (action.type) {
 
-        case BuilderTypes.SET_INGREDIENTS:
+        case types.SET_INGREDIENTS:
             return {
                 ...state,
                 ingredients: action.payload.ingredients
             };
 
-        case BuilderTypes.ADD_INGREDIENT:
+        case types.ADD_INGREDIENT:
             return {
                 ...state,
                 ingredients: {
@@ -27,7 +27,7 @@ export default function(state = initialState, action) {
                 totalPrice: state.totalPrice + burgerIngredientPrices[action.payload.ingredientName]
             };
 
-        case BuilderTypes.REMOVE_INGREDIENT:
+        case types.REMOVE_INGREDIENT:
             return {
                 ...state,
                 ingredients: {
@@ -37,7 +37,7 @@ export default function(state = initialState, action) {
                 totalPrice: state.ingredients[action.payload.ingredientName] <= 0 ? state.totalPrice : state.totalPrice - burgerIngredientPrices[action.payload.ingredientName],
             };
     
-        case BuilderTypes.CLEAR_BUILDER:
+        case types.CLEAR_BUILDER:
 
             const newIngredients = { ...state.ingredients };
 

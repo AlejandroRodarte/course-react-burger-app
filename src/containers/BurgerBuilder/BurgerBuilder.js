@@ -11,7 +11,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 import axios from '../../axios/axios-orders';
 
-import * as builderActions from '../../store/actions/builder';
+import * as actions from '../../store/actions';
 
 import getIngredientsAmount from '../../utils/functions/burger-builder/get-ingredients-amount';
 
@@ -115,9 +115,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onStartSetIngredients: () => dispatch(builderActions.startSetIngredients()),
-    onAddIngredient: (ingredientName) => dispatch(builderActions.addIngredient(ingredientName)),
-    onRemoveIngredient: (ingredientName) => dispatch(builderActions.removeIngredient(ingredientName))
+    onStartSetIngredients: () => dispatch(actions.startSetIngredients()),
+    onAddIngredient: (ingredientName) => dispatch(actions.addIngredient(ingredientName)),
+    onRemoveIngredient: (ingredientName) => dispatch(actions.removeIngredient(ingredientName))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, axios));

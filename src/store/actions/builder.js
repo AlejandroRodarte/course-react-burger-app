@@ -1,4 +1,4 @@
-import * as BuilderTypes from '../types/builder';
+import * as types from '../types';
 
 import axios from '../../axios/axios-orders';
 
@@ -10,26 +10,26 @@ export const startSetIngredients = () => async (dispatch) => {
 };
 
 export const setIngredients = (ingredients) => ({
-    type: BuilderTypes.SET_INGREDIENTS,
+    type: types.SET_INGREDIENTS,
     payload: {
         ingredients
     }
 });
 
 export const addIngredient = (ingredientName) => ({
-    type: BuilderTypes.ADD_INGREDIENT,
+    type: types.ADD_INGREDIENT,
     payload: {
         ingredientName
     }
 });
 
 export const removeIngredient = (ingredientName) => ({
-    type: BuilderTypes.REMOVE_INGREDIENT,
+    type: types.REMOVE_INGREDIENT,
     payload: {
         ingredientName
     }
 });
 
 export const clearBuilder = () => ({
-    type: BuilderTypes.CLEAR_BUILDER
+    type: types.CLEAR_BUILDER
 });
