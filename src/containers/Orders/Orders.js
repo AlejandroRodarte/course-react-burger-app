@@ -13,13 +13,9 @@ import * as actions from '../../store/actions';
 class Orders extends Component {
 
     async componentDidMount() {
-
-        if (this.props.orders.length === 0) {
-            try {
-                await this.props.onStartSetOrders(this.props.token);
-            } catch (e) { }
-        }
-
+        try {
+            await this.props.onStartSetOrders(this.props.token);
+        } catch (e) { }
     }
 
     render() {

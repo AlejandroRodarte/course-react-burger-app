@@ -10,6 +10,8 @@ import classes from './Auth.module.css';
 
 import * as actions from '../../store/actions';
 
+import getIngredientsAmount from '../../utils/functions/burger-builder/get-ingredients-amount';
+
 const controls = {
     email: {
         inputType: 'input',
@@ -41,7 +43,7 @@ const controls = {
     }
 };
 
-const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues, loading, errorMessage, history }) => {
+const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues, loading, errorMessage, history, ingredientsAmount }) => {
 
     const [isSignUp, setIsSignUp] = useState(true);
 
@@ -49,17 +51,23 @@ const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues, loa
 
         e.preventDefault();
         const credentials = getFormValues();
+        console.log(credentials);
 
         try {
+
             await onStartSetAuth(credentials, isSignUp);
-            history.replace('/builder');
+
+            if (ingredientsAmount > 0) {
+                history.replace('/checkout');
+            } else {
+                history.replace('/builder');
+            }
+
         } catch (e) { }
 
     };
 
-    const switchAuthModeHandler = (e) => {
-        setIsSignUp(prevIsSignUp => !prevIsSignUp);
-    };
+    const switchAuthModeHandler = () => setIsSignUp(prevIsSignUp => !prevIsSignUp);
 
     return (
         <div className={ classes.Auth }>
@@ -93,7 +101,8 @@ const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues, loa
 
 const mapStateToProps = state => ({
     loading: state.auth.loading,
-    errorMessage: state.auth.error ? state.auth.error.message : null
+    errorMessage: state.auth.error ? state.auth.error.message : null,
+    ingredientsAmount: getIngredientsAmount(state.builder.ingredients)
 });
 
 const mapDispatchToProps = dispatch => ({
