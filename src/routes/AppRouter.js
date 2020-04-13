@@ -2,10 +2,13 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import BurgerBuilder from '../containers/BurgerBuilder/BurgerBuilder';
-import Checkout from '../containers/Checkout/Checkout';
-import Orders from '../containers/Orders/Orders';
-import Auth from '../containers/Auth/Auth';
-import Logout from '../containers/Auth/Logout/Logout';
+
+import withSuspense from '../hoc/withSuspense/withSuspense';
+
+const Checkout = withSuspense(React.lazy(() => import('../containers/Checkout/Checkout')));
+const Orders = withSuspense(React.lazy(() => import('../containers/Orders/Orders')));
+const Auth = withSuspense(React.lazy(() => import('../containers/Auth/Auth')));
+const Logout = withSuspense(React.lazy(() => import('../containers/Auth/Logout/Logout')));
 
 const AppRouter = () => (
     <Switch> 
