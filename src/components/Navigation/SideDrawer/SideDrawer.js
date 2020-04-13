@@ -22,7 +22,10 @@ const SideDrawer = ({ closed, open, isAuthenticated }) => {
                 clicked={ closed } 
             />
 
-            <div className={ sideDrawerClasses.join(' ') }>
+            <div 
+                className={ sideDrawerClasses.join(' ') }
+                onClick={ closed }
+            >
                 <div className={ classes.Logo }>
                     <Logo />
                 </div>
