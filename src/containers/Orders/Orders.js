@@ -13,9 +13,15 @@ import * as actions from '../../store/actions';
 class Orders extends Component {
 
     async componentDidMount() {
+
+        if (!this.props.token) {
+            this.props.history.replace('/builder');
+        }
+
         try {
             await this.props.onStartSetOrders(this.props.token);
         } catch (e) { }
+
     }
 
     render() {

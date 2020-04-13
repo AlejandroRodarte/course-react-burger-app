@@ -23,7 +23,15 @@ export const startSetAuth = (credentials, isSignUp) => async (dispatch) => {
         });
 
         dispatch(setAuth(data));
-        dispatch(startLogout(+data.expiresIn));
+        dispatch(startLogout(+data.expiresIn * 1000));
+
+        const userData = {
+            token: data.idToken,
+            expirationTime: new Date().getTime() + (+data.expiresIn * 1000),
+            userId: data.localId
+        };
+
+        localStorage.setItem('userData', JSON.stringify(userData));
 
     } catch (e) {
         dispatch(authFail(e.response.data.error));
@@ -32,11 +40,17 @@ export const startSetAuth = (credentials, isSignUp) => async (dispatch) => {
 
 }
 
-export const startLogout = (expiresIn) => (dispatch) => setTimeout(() => dispatch(logout()), expiresIn * 1000);
+export const startLogout = (expiresIn) => (dispatch) => setTimeout(() => dispatch(logout()), expiresIn);
 
-export const logout = () => ({
-    type: types.LOGOUT
-});
+export const logout = () => {
+
+    localStorage.removeItem('userData');
+
+    return {
+        type: types.LOGOUT
+    };
+
+};
 
 export const setAuth = ({ idToken, localId }) => ({
     type: types.SET_AUTH,
@@ -52,3 +66,24 @@ export const authFail = (error) => ({
         error
     }
 });
+
+export const autoLogin = () => async (dispatch) => {
+
+    const userData = localStorage.getItem('userData');
+
+    if (!userData) {
+        return;
+    }
+
+    const { token: idToken, expirationTime, userId: localId } = JSON.parse(userData);
+    
+    const expiresIn = expirationTime - new Date().getTime();
+
+    if (idToken && expiresIn > 0) {
+        dispatch(setAuth({ idToken, localId }));
+        dispatch(startLogout(expiresIn));
+    } else {
+        dispatch(logout());
+    }
+
+};
