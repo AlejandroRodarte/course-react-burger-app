@@ -12,9 +12,30 @@ configure({
 
 describe('<NavigationItems />', () => {
 
+    let wrapper;
+
+    beforeEach(() => {
+        wrapper = shallow(<NavigationItems isAuthenticated={ false } />);
+    });
+
     it('Should render two <NavigationItem /> elements if not authenticated', () => {
-        const wrapper = shallow(<NavigationItems isAuthenticated={ false } />);
+
+        wrapper.setProps({
+            isAuthenticated: false
+        });
+
         expect(wrapper.find(NavigationItem)).toHaveLength(2);
+
+    });
+
+    it('Should render three <NavigationItem /> elements if authenticated', () => {
+        
+        wrapper.setProps({
+            isAuthenticated: true
+        });
+
+        expect(wrapper.find(NavigationItem)).toHaveLength(3);
+
     });
 
 });
