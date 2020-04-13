@@ -29,7 +29,7 @@ class Orders extends Component {
         return (
             <div>
                 { this.props.loading && <Spinner /> }
-                { ordersJsx }
+                { this.props.hasError ? <p>Error loading orders!</p> : ordersJsx }
             </div>
         );
 
@@ -39,7 +39,8 @@ class Orders extends Component {
 
 const mapStateToProps = state => ({
     orders: state.orders.orders,
-    loading: state.orders.loading
+    loading: state.orders.loading,
+    hasError: !!state.orders.error
 });
 
 const mapDispatchToProps = dispatch => ({
