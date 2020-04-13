@@ -6,10 +6,6 @@ import Button from '../../UI/Button/Button';
 import burgerIngredientNames from '../../../utils/burger/burger-ingredient-names';
 
 class OrderSummary extends Component {
-    
-    componentDidUpdate() {
-        // console.log('[OrderSummary] componentDidUpdate');
-    }
 
     render() {
 
