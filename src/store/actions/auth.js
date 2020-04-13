@@ -25,7 +25,7 @@ export const startSetAuth = (credentials, isSignUp) => async (dispatch) => {
         dispatch(setAuth(data));
 
     } catch (e) {
-        dispatch(authFail(e));
+        dispatch(authFail(e.response.data.error));
     }
 
 }

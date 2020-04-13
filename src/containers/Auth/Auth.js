@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import Button from '../../components/UI/Button/Button';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 import withFormHandler from '../../hoc/withFormHandler/withFormHandler';
 
@@ -40,7 +41,7 @@ const controls = {
     }
 };
 
-const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues }) => {
+const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues, loading, errorMessage }) => {
 
     const [isSignUp, setIsSignUp] = useState(true);
 
@@ -60,9 +61,11 @@ const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues }) =
     return (
         <div className={ classes.Auth }>
 
+            { errorMessage && <p>{ errorMessage }</p> }
+
             <form onSubmit={ submitHandler }>
     
-                { formElementsJsx }
+                { loading ? <Spinner /> : formElementsJsx }
     
                 <Button 
                     type="Success"
@@ -85,8 +88,13 @@ const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues }) =
 
 }
 
+const mapStateToProps = state => ({
+    loading: state.auth.loading,
+    errorMessage: state.auth.error ? state.auth.error.message : null
+});
+
 const mapDispatchToProps = dispatch => ({
     onStartSetAuth: (credentials, isSignUp) => dispatch(actions.startSetAuth(credentials, isSignUp))
 });
 
-export default connect(undefined, mapDispatchToProps)(withFormHandler(Auth, controls));
+export default connect(mapStateToProps, mapDispatchToProps)(withFormHandler(Auth, controls));
