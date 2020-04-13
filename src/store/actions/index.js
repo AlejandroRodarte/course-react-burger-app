@@ -13,5 +13,6 @@ export {
 } from './orders';
 
 export {
-    startSetAuth
+    startSetAuth,
+    logout
 } from './auth';
