@@ -4,7 +4,8 @@ import updateState from '../../utils/functions/store/update-state';
 
 const setOrders = (state, action) => updateState(state, {
     orders: action.payload.orders,
-    loading: false
+    loading: false,
+    error: null
 });
 
 const addOrder = (state, action) => updateState(state, {

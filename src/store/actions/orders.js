@@ -2,13 +2,13 @@ import * as types from '../types';
 
 import axios from '../../axios/axios-orders';
 
-export const startSetOrders = () => async (dispatch) => {
+export const startSetOrders = (token) => async (dispatch) => {
 
     try {
 
         dispatch(setOrdersLoading());
 
-        const { data } = await axios.get('/orders.json');
+        const { data } = await axios.get(`/orders.json?auth=${token}`);
 
         const orders = [];
 
@@ -34,10 +34,10 @@ export const setOrders = (orders) => ({
     }
 });
 
-export const startAddOrder = (order) => async (dispatch) => {
+export const startAddOrder = (order, token) => async (dispatch) => {
     try {
         dispatch(setOrdersLoading());
-        const { data } = await axios.post('/orders.json', order);
+        const { data } = await axios.post(`/orders.json?auth=${token}`, order);
         dispatch(addOrder(data.name, order));
     } catch (e) {
         dispatch(addOrderFail(e));

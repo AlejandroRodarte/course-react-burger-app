@@ -113,7 +113,8 @@ const ContactData = ({
     history, 
     loading, 
     formElementsJsx, 
-    isFormValid 
+    isFormValid,
+    token
 }) => {
 
     const orderHandler = async (e) => {
@@ -130,7 +131,7 @@ const ContactData = ({
 
         try {
 
-            await onStartAddOrder(order);
+            await onStartAddOrder(order, token);
             onClearBuilder();
 
             history.replace('/builder');
@@ -176,12 +177,13 @@ const ContactData = ({
 const mapStateToProps = state => ({
     ingredients: state.builder.ingredients,
     price: state.builder.totalPrice,
-    loading: state.orders.loading
+    loading: state.orders.loading,
+    token: state.auth.token
 });
 
 const mapDispatchToProps = dispatch => ({
     onClearBuilder: () => dispatch(actions.clearBuilder()),
-    onStartAddOrder: (order) => dispatch(actions.startAddOrder(order))
+    onStartAddOrder: (order, token) => dispatch(actions.startAddOrder(order, token))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(withFormHandler(ContactData, controls), axios));
