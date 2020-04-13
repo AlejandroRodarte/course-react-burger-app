@@ -19,6 +19,11 @@ const authFail = (state, action) => updateState(state, {
     loading: false
 });
 
+const logout = (state) => updateState(state, {
+    token: null,
+    userId: null
+});
+
 const initialState = {
     token: null,
     userId: null,
@@ -38,6 +43,9 @@ export default function(state = initialState, action) {
 
         case types.AUTH_FAIL:
             return authFail(state, action);
+
+        case types.LOGOUT:
+            return logout(state);
 
         default:
             return state;

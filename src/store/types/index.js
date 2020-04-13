@@ -18,5 +18,6 @@ export {
 export {
     SET_AUTH,
     AUTH_FAIL,
-    SET_AUTH_LOADING
+    SET_AUTH_LOADING,
+    LOGOUT
 } from './auth';

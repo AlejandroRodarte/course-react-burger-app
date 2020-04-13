@@ -23,12 +23,19 @@ export const startSetAuth = (credentials, isSignUp) => async (dispatch) => {
         });
 
         dispatch(setAuth(data));
+        dispatch(startLogout(+data.expiresIn));
 
     } catch (e) {
         dispatch(authFail(e.response.data.error));
     }
 
 }
+
+export const startLogout = (expiresIn) => (dispatch) => setTimeout(() => dispatch(logout()), expiresIn * 1000);
+
+export const logout = () => ({
+    type: types.LOGOUT
+});
 
 export const setAuth = ({ idToken, localId }) => ({
     type: types.SET_AUTH,
