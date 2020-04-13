@@ -4,9 +4,14 @@ import burgerIngredientPrices from '../../utils/burger/burger-ingredient-prices'
 
 import updateState from '../../utils/functions/store/update-state';
 
+const setBuilderLoading = (state) => updateState(state, {
+    loading: true
+});
+
 const setIngredients = (state, action) => updateState(state, {
     ingredients: action.payload.ingredients,
-    error: false
+    error: false,
+    loading: false
 });
 
 const addIngredient = (state, action) => updateState(state, {
@@ -45,12 +50,16 @@ const fetchIngredientsFail = (state) => updateState(state, {
 const initialState = {
     ingredients: {},
     totalPrice: 4,
-    error: false
+    error: false,
+    loading: false
 };
 
 export default function(state = initialState, action) {
 
     switch (action.type) {
+
+        case types.SET_BUILDER_LOADING:
+            return setBuilderLoading(state);
 
         case types.SET_INGREDIENTS:
             return setIngredients(state, action);

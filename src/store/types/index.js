@@ -3,7 +3,8 @@ export {
     ADD_INGREDIENT,
     REMOVE_INGREDIENT,
     CLEAR_BUILDER,
-    FETCH_INGREDIENTS_FAIL
+    FETCH_INGREDIENTS_FAIL,
+    SET_BUILDER_LOADING
 } from './builder';
 
 export {

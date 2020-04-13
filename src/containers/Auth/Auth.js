@@ -49,7 +49,8 @@ const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues, loa
         if (isAuthenticated) {
             history.replace('/builder');
         }
-    }, [isAuthenticated, history]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const [isSignUp, setIsSignUp] = useState(true);
 
@@ -57,7 +58,6 @@ const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues, loa
 
         e.preventDefault();
         const credentials = getFormValues();
-        console.log(credentials);
 
         try {
 
@@ -66,7 +66,7 @@ const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues, loa
             if (ingredientsAmount > 0) {
                 history.replace('/checkout');
             } else {
-                history.replace('/builder');
+                history.push('/builder');
             }
 
         } catch (e) { }

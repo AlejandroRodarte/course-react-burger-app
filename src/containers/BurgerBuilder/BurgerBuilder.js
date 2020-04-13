@@ -19,8 +19,7 @@ class BurgerBuilder extends Component {
     
     state = {
         purchaseable: false,
-        purchasing: false,
-        loading: false
+        purchasing: false
     };
 
     async componentDidMount() {
@@ -67,7 +66,7 @@ class BurgerBuilder extends Component {
 
         let modalContentJsx = null;
 
-        let mainContentJsx = this.props.error ? <p>Ingredients not loaded!</p> : <Spinner />;
+        let mainContentJsx = this.props.error ? <p>Ingredients not loaded!</p> : null;
 
         if (this.props.hasIngredients) {
 
@@ -93,8 +92,8 @@ class BurgerBuilder extends Component {
 
         }
 
-        if (this.state.loading) {
-            modalContentJsx = <Spinner />;
+        if (this.props.loading) {
+            mainContentJsx = <Spinner />;
         }
 
         return (
@@ -120,7 +119,8 @@ const mapStateToProps = state => ({
     hasIngredients: Object.keys(state.builder.ingredients).length > 0,
     ingredientsAmount: getIngredientsAmount(state.builder.ingredients),
     error: state.builder.error,
-    isAuthenticated: !!state.auth.token
+    isAuthenticated: !!state.auth.token,
+    loading: state.builder.loading
 });
 
 const mapDispatchToProps = dispatch => ({
