@@ -17,14 +17,12 @@ export const startSetAuth = (credentials, isSignUp) => async (dispatch) => {
             `:signUp?key=${process.env.REACT_APP_FIREBASE_API_KEY}` :
             `:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_API_KEY}`;
 
-        const auth = await axios.post(url, {
+        const { data } = await axios.post(url, {
             ...credentials,
             returnSecureToken: true
         });
 
-        console.log(auth);
-
-        dispatch(setAuth(auth));
+        dispatch(setAuth(data));
 
     } catch (e) {
         dispatch(authFail(e));
@@ -32,10 +30,11 @@ export const startSetAuth = (credentials, isSignUp) => async (dispatch) => {
 
 }
 
-export const setAuth = (auth) => ({
+export const setAuth = ({ idToken, localId }) => ({
     type: types.SET_AUTH,
     payload: {
-        auth
+        token: idToken,
+        userId: localId
     }
 });
 

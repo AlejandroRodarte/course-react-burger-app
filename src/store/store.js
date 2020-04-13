@@ -5,7 +5,8 @@ import * as reducers from './reducers';
 
 const rootReducer = combineReducers({
     builder: reducers.builderReducer,
-    orders: reducers.ordersReducer
+    orders: reducers.ordersReducer,
+    auth: reducers.authReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

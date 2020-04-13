@@ -5,3 +5,7 @@ export {
 export {
     default as ordersReducer
 } from './orders';
+
+export {
+    default as authReducer
+} from './auth';
