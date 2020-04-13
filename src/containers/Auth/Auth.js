@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import Button from '../../components/UI/Button/Button';
@@ -43,7 +43,13 @@ const controls = {
     }
 };
 
-const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues, loading, errorMessage, history, ingredientsAmount }) => {
+const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues, loading, errorMessage, history, ingredientsAmount, isAuthenticated }) => {
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            history.replace('/builder');
+        }
+    }, [isAuthenticated, history]);
 
     const [isSignUp, setIsSignUp] = useState(true);
 
@@ -102,7 +108,8 @@ const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues, loa
 const mapStateToProps = state => ({
     loading: state.auth.loading,
     errorMessage: state.auth.error ? state.auth.error.message : null,
-    ingredientsAmount: getIngredientsAmount(state.builder.ingredients)
+    ingredientsAmount: getIngredientsAmount(state.builder.ingredients),
+    isAuthenticated: !!state.auth.token
 });
 
 const mapDispatchToProps = dispatch => ({
