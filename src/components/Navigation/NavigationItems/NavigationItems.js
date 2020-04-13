@@ -6,14 +6,20 @@ import classes from './NavigationItems.module.css';
 
 const NavigationItems = ({ isAuthenticated }) => (
     <ul className={ classes.NavigationItems }>
+
         <NavigationItem link="/builder">
             Burger Builder
         </NavigationItem>
-        <NavigationItem link="/orders">
-            Orders
-        </NavigationItem>
+
+        { 
+            isAuthenticated && 
+                <NavigationItem link="/orders">
+                    Orders
+                </NavigationItem>
+        }
+
         {
-            isAuthenticated ?
+            !isAuthenticated ?
                 <NavigationItem link="/auth">
                     Authenticate
                 </NavigationItem> :
@@ -21,6 +27,7 @@ const NavigationItems = ({ isAuthenticated }) => (
                     Logout
                 </NavigationItem>
         }
+
     </ul>
 );
 

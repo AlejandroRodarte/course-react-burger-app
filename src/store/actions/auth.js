@@ -27,6 +27,7 @@ export const startSetAuth = (credentials, isSignUp) => async (dispatch) => {
 
     } catch (e) {
         dispatch(authFail(e.response.data.error));
+        throw e;
     }
 
 }

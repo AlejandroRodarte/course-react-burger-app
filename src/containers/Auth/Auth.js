@@ -41,16 +41,19 @@ const controls = {
     }
 };
 
-const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues, loading, errorMessage }) => {
+const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues, loading, errorMessage, history }) => {
 
     const [isSignUp, setIsSignUp] = useState(true);
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
 
         e.preventDefault();
         const credentials = getFormValues();
 
-        onStartSetAuth(credentials, isSignUp);
+        try {
+            await onStartSetAuth(credentials, isSignUp);
+            history.replace('/builder');
+        } catch (e) { }
 
     };
 
