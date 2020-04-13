@@ -31,6 +31,10 @@ class BurgerBuilder extends Component {
             } catch (e) { }
         }
 
+        if (this.props.ingredientsAmount > 0) {
+            this.setState(() => ({ purchaseable: true }));
+        }
+
     }
 
     addIngredientHandler = (type) => {
