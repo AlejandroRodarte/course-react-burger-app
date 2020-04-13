@@ -6,14 +6,14 @@ import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle';
 
 import classes from './Toolbar.module.css';
 
-const Toolbar = ({ opened }) => (
+const Toolbar = ({ opened, isAuthenticated }) => (
     <header className={ classes.Toolbar }>
         <DrawerToggle click={ opened } />
         <div className={ classes.Logo }>
             <Logo />
         </div>
         <nav className={ classes.DesktopOnly }>
-            <NavigationItems />
+            <NavigationItems isAuthenticated={ isAuthenticated } />
         </nav>
     </header>
 );
