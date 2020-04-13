@@ -6,13 +6,18 @@ export const setAuthLoading = () => ({
     type: types.SET_AUTH_LOADING
 });
 
-export const startSetAuth = (credentials) => async (dispatch) => {
+export const startSetAuth = (credentials, isSignUp) => async (dispatch) => {
 
     dispatch(setAuthLoading());
 
     try {
 
-        const auth = await axios.post(`:signUp?key=${process.env.REACT_APP_FIREBASE_API_KEY}`, {
+        const url = 
+            isSignUp ? 
+            `:signUp?key=${process.env.REACT_APP_FIREBASE_API_KEY}` :
+            `:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_API_KEY}`;
+
+        const auth = await axios.post(url, {
             ...credentials,
             returnSecureToken: true
         });

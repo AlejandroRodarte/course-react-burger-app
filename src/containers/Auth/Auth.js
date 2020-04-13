@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import Button from '../../components/UI/Button/Button';
@@ -42,17 +42,24 @@ const controls = {
 
 const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues }) => {
 
+    const [isSignUp, setIsSignUp] = useState(true);
+
     const submitHandler = (e) => {
 
         e.preventDefault();
         const credentials = getFormValues();
 
-        onStartSetAuth(credentials);
+        onStartSetAuth(credentials, isSignUp);
 
+    };
+
+    const switchAuthModeHandler = (e) => {
+        setIsSignUp(prevIsSignUp => !prevIsSignUp);
     };
 
     return (
         <div className={ classes.Auth }>
+
             <form onSubmit={ submitHandler }>
     
                 { formElementsJsx }
@@ -63,15 +70,23 @@ const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues }) =
                 >
                     SUBMIT
                 </Button>
-    
             </form>
+
+            <Button
+                type="Danger"
+                disabled={ false }
+                clicked={ switchAuthModeHandler }
+            >
+                SWITCH TO { isSignUp ? 'SIGN IN' : 'SIGN UP' }
+            </Button>
+
         </div>
     );
 
 }
 
 const mapDispatchToProps = dispatch => ({
-    onStartSetAuth: (credentials) => dispatch(actions.startSetAuth(credentials))
+    onStartSetAuth: (credentials, isSignUp) => dispatch(actions.startSetAuth(credentials, isSignUp))
 });
 
 export default connect(undefined, mapDispatchToProps)(withFormHandler(Auth, controls));
