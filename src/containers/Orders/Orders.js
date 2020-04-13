@@ -19,7 +19,7 @@ class Orders extends Component {
         }
 
         try {
-            await this.props.onStartSetOrders(this.props.token);
+            await this.props.onStartSetOrders(this.props.token, this.props.userId);
         } catch (e) { }
 
     }
@@ -43,11 +43,12 @@ const mapStateToProps = state => ({
     orders: state.orders.orders,
     loading: state.orders.loading,
     hasError: !!state.orders.error,
-    token: state.auth.token
+    token: state.auth.token,
+    userId: state.auth.userId
 });
 
 const mapDispatchToProps = dispatch => ({
-    onStartSetOrders: (token) => dispatch(actions.startSetOrders(token))
+    onStartSetOrders: (token, userId) => dispatch(actions.startSetOrders(token, userId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));

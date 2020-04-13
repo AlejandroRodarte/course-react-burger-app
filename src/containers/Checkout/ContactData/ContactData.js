@@ -114,7 +114,8 @@ const ContactData = ({
     loading, 
     formElementsJsx, 
     isFormValid,
-    token
+    token,
+    userId
 }) => {
 
     const orderHandler = async (e) => {
@@ -126,7 +127,8 @@ const ContactData = ({
         const order = {
             ingredients: ingredients,
             price: price,
-            orderData
+            orderData,
+            userId
         };
 
         try {
@@ -178,7 +180,8 @@ const mapStateToProps = state => ({
     ingredients: state.builder.ingredients,
     price: state.builder.totalPrice,
     loading: state.orders.loading,
-    token: state.auth.token
+    token: state.auth.token,
+    userId: state.auth.userId
 });
 
 const mapDispatchToProps = dispatch => ({

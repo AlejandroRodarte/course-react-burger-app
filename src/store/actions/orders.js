@@ -2,13 +2,13 @@ import * as types from '../types';
 
 import axios from '../../axios/axios-orders';
 
-export const startSetOrders = (token) => async (dispatch) => {
+export const startSetOrders = (token, userId) => async (dispatch) => {
 
     try {
 
         dispatch(setOrdersLoading());
 
-        const { data } = await axios.get(`/orders.json?auth=${token}`);
+        const { data } = await axios.get(`/orders.json?auth=${token}&orderBy="userId"&equalTo="${userId}"`);
 
         const orders = [];
 
