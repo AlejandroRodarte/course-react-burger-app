@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import Input from '../../components/UI/Input/Input';
 
+import updateState from '../../utils/functions/store/update-state';
+
 const withFormHandler = (WrappedComponent, controls) => class extends Component {
 
     state = {
@@ -15,15 +17,13 @@ const withFormHandler = (WrappedComponent, controls) => class extends Component 
 
         this.setState((prevState) => {
 
-            const updatedForm = {
-                ...prevState.controls,
-                [inputName]: {
-                    ...prevState.controls[inputName],
+            const updatedForm = updateState(prevState.controls, {
+                [inputName]: updateState(prevState.controls[inputName], {
                     value,
                     valid: this.checkValidity(value, prevState.controls[inputName].validation),
                     touched: true
-                }
-            };
+                }) 
+            });
 
             return {
                 controls: updatedForm,
