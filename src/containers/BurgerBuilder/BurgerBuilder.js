@@ -15,7 +15,7 @@ import * as actions from '../../store/actions';
 
 import getIngredientsAmount from '../../utils/functions/burger-builder/get-ingredients-amount';
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
     
     state = {
         purchaseable: false,
