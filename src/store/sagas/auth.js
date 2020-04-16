@@ -2,7 +2,7 @@ import { put } from 'redux-saga/effects';
 
 import * as types from '../types';
 
-function* logout(action) {
+export function* logoutSaga(action) {
 
     yield localStorage.removeItem('userData');
 
