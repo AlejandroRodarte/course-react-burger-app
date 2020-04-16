@@ -15,5 +15,6 @@ export {
 export {
     startSetAuth,
     logout,
-    autoLogin
+    autoLogin,
+    initLogout
 } from './auth';

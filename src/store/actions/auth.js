@@ -40,17 +40,15 @@ export const startSetAuth = (credentials, isSignUp) => async (dispatch) => {
 
 }
 
-export const startLogout = (expiresIn) => (dispatch) => setTimeout(() => dispatch(logout()), expiresIn);
+export const startLogout = (expiresIn) => (dispatch) => setTimeout(() => dispatch(initLogout()), expiresIn);
 
-export const logout = () => {
+export const logout = () => ({
+    type: types.LOGOUT
+});
 
-    localStorage.removeItem('userData');
-
-    return {
-        type: types.LOGOUT
-    };
-
-};
+export const initLogout = () => ({
+    type: types.INIT_LOGOUT
+});
 
 export const setAuth = ({ idToken, localId }) => ({
     type: types.SET_AUTH,

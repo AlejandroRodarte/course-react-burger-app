@@ -7,7 +7,7 @@ import * as actions from '../../../store/actions';
 class Logout extends Component {
 
     componentDidMount() {
-        this.props.onLogout();
+        this.props.onInitLogout();
     }
 
     render() {
@@ -17,7 +17,7 @@ class Logout extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    onLogout: () => dispatch(actions.logout())
+    onInitLogout: () => dispatch(actions.initLogout())
 });
 
 export default connect(undefined, mapDispatchToProps)(Logout);
