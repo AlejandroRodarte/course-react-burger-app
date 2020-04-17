@@ -8,8 +8,8 @@ import selectors from '../selectors';
 
 import history from '../../history/history';
 
-export function* logoutSaga(action) {
-    yield localStorage.removeItem('userData');
+export function* logoutSaga() {
+    yield call([localStorage, 'removeItem'], 'userData');
     yield put(actions.logout());
 }
 
@@ -36,14 +36,14 @@ export function* startSetAuthSaga(action) {
             userId: data.localId
         };
     
-        yield localStorage.setItem('userData', JSON.stringify(userData));
+        yield call([localStorage, 'setItem'], 'userData', JSON.stringify(userData));
 
         const ingredientsAmount = yield select(selectors.getIngredientsAmount);
 
         if (ingredientsAmount > 0) {
-            history.replace('/checkout');
+            yield call([history, 'replace'], '/checkout');
         } else {
-            history.push('/builder');
+            yield call([history, 'push'], '/builder');
         }
 
     } catch (e) {
