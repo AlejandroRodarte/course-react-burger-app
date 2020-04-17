@@ -23,5 +23,6 @@ export {
     LOGOUT,
     INIT_LOGOUT,
     START_LOGOUT,
-    START_SET_AUTH
+    START_SET_AUTH,
+    AUTO_LOGIN
 } from './auth';

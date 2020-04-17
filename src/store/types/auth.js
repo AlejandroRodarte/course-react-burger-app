@@ -5,3 +5,4 @@ export const AUTH_FAIL = 'auth/authFail';
 export const INIT_LOGOUT = 'auth/initLogout';
 export const LOGOUT = 'auth/logout';
 export const START_LOGOUT = 'auth/startLogout';
+export const AUTO_LOGIN = 'auth/autoLogin';

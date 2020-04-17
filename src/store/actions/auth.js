@@ -42,23 +42,6 @@ export const authFail = (error) => ({
     }
 });
 
-export const autoLogin = () => async (dispatch) => {
-
-    const userData = localStorage.getItem('userData');
-
-    if (!userData) {
-        return;
-    }
-
-    const { token: idToken, expirationTime, userId: localId } = JSON.parse(userData);
-    
-    const expiresIn = expirationTime - new Date().getTime();
-
-    if (idToken && expiresIn > 0) {
-        dispatch(setAuth({ idToken, localId }));
-        dispatch(startLogout(expiresIn));
-    } else {
-        dispatch(logout());
-    }
-
-};
+export const autoLogin = () => ({
+    type: types.AUTO_LOGIN
+});

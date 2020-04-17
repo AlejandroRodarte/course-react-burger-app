@@ -11,6 +11,7 @@ import history from '../../history/history';
 export function* logoutSaga() {
     yield call([localStorage, 'removeItem'], 'userData');
     yield put(actions.logout());
+    yield call([history, 'replace'], '/builder');
 }
 
 export function* startLogoutSaga(action) {
@@ -48,6 +49,31 @@ export function* startSetAuthSaga(action) {
 
     } catch (e) {
         yield put(actions.authFail(e.response.data.error));
+    }
+
+}
+
+export function* autoLoginSaga() {
+
+    const userData = yield call([localStorage, 'getItem'], 'userData');
+
+    if (!userData) {
+        return;
+    }
+
+    const { 
+        token: idToken, 
+        expirationTime, 
+        userId: localId 
+    } = yield call([JSON, 'parse'], userData);
+    
+    const expiresIn = expirationTime - new Date().getTime();
+
+    if (idToken && expiresIn > 0) {
+        yield put(actions.setAuth({ idToken, localId }));
+        yield put(actions.startLogout(expiresIn));
+    } else {
+        yield put(actions.initLogout());
     }
 
 }
