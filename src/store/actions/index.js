@@ -4,13 +4,18 @@ export {
     addIngredient,
     removeIngredient,
     clearBuilder,
-    fetchIngredientsFail
+    fetchIngredientsFail,
+    setBuilderLoading
 } from './builder';
 
 export {
     startSetOrders, 
     setOrders, 
-    startAddOrder
+    startAddOrder,
+    setOrdersLoading,
+    setOrdersFail,
+    addOrder,
+    addOrderFail
 } from './orders';
 
 export {

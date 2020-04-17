@@ -1,31 +1,12 @@
 import * as types from '../types';
 
-import axios from '../../axios/axios-orders';
-
-export const startSetOrders = (token, userId) => async (dispatch) => {
-
-    try {
-
-        dispatch(setOrdersLoading());
-
-        const { data } = await axios.get(`/orders.json?auth=${token}&orderBy="userId"&equalTo="${userId}"`);
-
-        const orders = [];
-
-        for (const key in data) {
-            orders.push({
-                id: key,
-                ...data[key]
-            });
-        }
-
-        dispatch(setOrders(orders));
-
-    } catch (e) {
-        dispatch(setOrdersFail(e));
+export const startSetOrders = (token, userId) => ({
+    type: types.START_SET_ORDERS,
+    payload: {
+        token,
+        userId
     }
-
-};
+});
 
 export const setOrders = (orders) => ({
     type: types.SET_ORDERS,
@@ -34,16 +15,13 @@ export const setOrders = (orders) => ({
     }
 });
 
-export const startAddOrder = (order, token) => async (dispatch) => {
-    try {
-        dispatch(setOrdersLoading());
-        const { data } = await axios.post(`/orders.json?auth=${token}`, order);
-        dispatch(addOrder(data.name, order));
-    } catch (e) {
-        dispatch(addOrderFail(e));
-        throw e;
+export const startAddOrder = (order, token) => ({
+    type: types.START_ADD_ORDER,
+    payload: {
+        order,
+        token
     }
-}
+});
 
 export const addOrder = (id, order) => ({
     type: types.ADD_ORDER,

@@ -10,6 +10,7 @@ export {
 
 export {
     START_SET_ORDERS,
+    START_ADD_ORDER,
     SET_ORDERS,
     ADD_ORDER,
     ADD_ORDER_FAIL,

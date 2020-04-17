@@ -22,12 +22,10 @@ export class BurgerBuilder extends Component {
         purchasing: false
     };
 
-    async componentDidMount() {
+    componentDidMount() {
 
         if (!this.props.hasIngredients) {
-            try {
-                await this.props.onStartSetIngredients();
-            } catch (e) { }
+            this.props.onStartSetIngredients();
         }
 
         if (this.props.ingredientsAmount > 0) {

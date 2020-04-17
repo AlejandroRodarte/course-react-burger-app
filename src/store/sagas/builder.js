@@ -5,6 +5,8 @@ import * as actions from '../actions';
 
 export function* startSetIngredientsSaga() {
 
+    yield put(actions.setBuilderLoading());
+
     try {
         const ingredients = yield call(builderApi.getIngredients);
         yield put(actions.setIngredients(ingredients));

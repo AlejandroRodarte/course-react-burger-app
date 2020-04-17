@@ -108,9 +108,7 @@ const ContactData = ({
     price, 
     ingredients, 
     getFormValues, 
-    onStartAddOrder, 
-    onClearBuilder, 
-    history, 
+    onStartAddOrder,
     loading, 
     formElementsJsx, 
     isFormValid,
@@ -118,7 +116,7 @@ const ContactData = ({
     userId
 }) => {
 
-    const orderHandler = async (e) => {
+    const orderHandler = (e) => {
 
         e.preventDefault();
 
@@ -131,14 +129,7 @@ const ContactData = ({
             userId
         };
 
-        try {
-
-            await onStartAddOrder(order, token);
-            onClearBuilder();
-
-            history.replace('/builder');
-            
-        } catch (e) { }
+        onStartAddOrder(order, token);
 
     };
 
@@ -185,7 +176,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onClearBuilder: () => dispatch(actions.clearBuilder()),
     onStartAddOrder: (order, token) => dispatch(actions.startAddOrder(order, token))
 });
 
