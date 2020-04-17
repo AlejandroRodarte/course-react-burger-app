@@ -58,6 +58,7 @@ export function* autoLoginSaga() {
     const userData = yield call([localStorage, 'getItem'], 'userData');
 
     if (!userData) {
+        yield put(actions.initLogout());
         return;
     }
 
