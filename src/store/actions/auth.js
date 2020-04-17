@@ -40,7 +40,12 @@ export const startSetAuth = (credentials, isSignUp) => async (dispatch) => {
 
 }
 
-export const startLogout = (expiresIn) => (dispatch) => setTimeout(() => dispatch(initLogout()), expiresIn);
+export const startLogout = (expiresIn) => ({
+    type: types.START_LOGOUT,
+    payload: {
+        expiresIn
+    }
+});
 
 export const logout = () => ({
     type: types.LOGOUT
