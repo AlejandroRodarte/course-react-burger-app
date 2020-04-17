@@ -48,7 +48,7 @@ export function* startSetAuthSaga(action) {
         }
 
     } catch (e) {
-        yield put(actions.authFail(e.response.data.error));
+        yield put(actions.authFail(!e.response ? { message: 'NETWORK_ERROR' } : e.response.data.error));
     }
 
 }
