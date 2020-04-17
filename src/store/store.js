@@ -2,7 +2,7 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 
-import { watchAuth } from './sagas';
+import rootSaga from './sagas';
 
 import * as reducers from './reducers';
 
@@ -23,6 +23,6 @@ const store = createStore(
     )
 );
 
-sagaMiddleware.run(watchAuth);
+sagaMiddleware.run(rootSaga);
 
 export default store;

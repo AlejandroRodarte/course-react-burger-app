@@ -3,7 +3,8 @@ export {
     setIngredients,
     addIngredient,
     removeIngredient,
-    clearBuilder
+    clearBuilder,
+    fetchIngredientsFail
 } from './builder';
 
 export {

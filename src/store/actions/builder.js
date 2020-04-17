@@ -1,23 +1,12 @@
 import * as types from '../types';
 
-import axios from '../../axios/axios-orders';
-
 export const setBuilderLoading = () => ({
     type: types.SET_BUILDER_LOADING
 });
 
-export const startSetIngredients = () => async (dispatch) => {
-    try {
-
-        dispatch(setBuilderLoading());
-
-        const { data: ingredients } = await axios.get('/ingredients.json');
-        dispatch(setIngredients(ingredients));
-        
-    } catch (e) {
-        dispatch(fetchIngredientsFail());
-    }
-};
+export const startSetIngredients = () => ({
+    type: types.START_SET_INGREDIENTS
+});
 
 export const fetchIngredientsFail = () => ({
     type: types.FETCH_INGREDIENTS_FAIL
