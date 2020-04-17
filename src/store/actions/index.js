@@ -16,5 +16,9 @@ export {
     startSetAuth,
     logout,
     autoLogin,
-    initLogout
+    initLogout,
+    setAuthLoading,
+    setAuth,
+    startLogout,
+    authFail
 } from './auth';

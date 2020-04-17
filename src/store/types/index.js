@@ -22,5 +22,6 @@ export {
     SET_AUTH_LOADING,
     LOGOUT,
     INIT_LOGOUT,
-    START_LOGOUT
+    START_LOGOUT,
+    START_SET_AUTH
 } from './auth';

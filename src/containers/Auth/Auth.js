@@ -10,8 +10,6 @@ import classes from './Auth.module.css';
 
 import * as actions from '../../store/actions';
 
-import getIngredientsAmount from '../../utils/functions/burger-builder/get-ingredients-amount';
-
 const controls = {
     email: {
         inputType: 'input',
@@ -43,7 +41,7 @@ const controls = {
     }
 };
 
-const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues, loading, errorMessage, history, ingredientsAmount, isAuthenticated }) => {
+const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues, loading, errorMessage, history, isAuthenticated }) => {
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -54,22 +52,12 @@ const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues, loa
 
     const [isSignUp, setIsSignUp] = useState(true);
 
-    const submitHandler = async (e) => {
+    const submitHandler = (e) => {
 
         e.preventDefault();
         const credentials = getFormValues();
 
-        try {
-
-            await onStartSetAuth(credentials, isSignUp);
-
-            if (ingredientsAmount > 0) {
-                history.replace('/checkout');
-            } else {
-                history.push('/builder');
-            }
-
-        } catch (e) { }
+        onStartSetAuth(credentials, isSignUp);
 
     };
 
@@ -108,7 +96,6 @@ const Auth = ({ formElementsJsx, isFormValid, onStartSetAuth, getFormValues, loa
 const mapStateToProps = state => ({
     loading: state.auth.loading,
     errorMessage: state.auth.error ? state.auth.error.message : null,
-    ingredientsAmount: getIngredientsAmount(state.builder.ingredients),
     isAuthenticated: !!state.auth.token
 });
 

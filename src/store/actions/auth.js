@@ -1,44 +1,16 @@
 import * as types from '../types';
 
-import axios from '../../axios/axios-auth';
-
 export const setAuthLoading = () => ({
     type: types.SET_AUTH_LOADING
 });
 
-export const startSetAuth = (credentials, isSignUp) => async (dispatch) => {
-
-    dispatch(setAuthLoading());
-
-    try {
-
-        const url = 
-            isSignUp ? 
-            `:signUp?key=${process.env.REACT_APP_FIREBASE_API_KEY}` :
-            `:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_API_KEY}`;
-
-        const { data } = await axios.post(url, {
-            ...credentials,
-            returnSecureToken: true
-        });
-
-        dispatch(setAuth(data));
-        dispatch(startLogout(+data.expiresIn * 1000));
-
-        const userData = {
-            token: data.idToken,
-            expirationTime: new Date().getTime() + (+data.expiresIn * 1000),
-            userId: data.localId
-        };
-
-        localStorage.setItem('userData', JSON.stringify(userData));
-
-    } catch (e) {
-        dispatch(authFail(e.response.data.error));
-        throw e;
+export const startSetAuth = (credentials, isSignUp) => ({
+    type: types.START_SET_AUTH,
+    payload: {
+        credentials,
+        isSignUp
     }
-
-}
+});
 
 export const startLogout = (expiresIn) => ({
     type: types.START_LOGOUT,

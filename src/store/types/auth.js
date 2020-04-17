@@ -1,4 +1,5 @@
 export const SET_AUTH_LOADING = 'auth/setAuthLoading';
+export const START_SET_AUTH = 'auth/startSetAuth';
 export const SET_AUTH = 'auth/setAuth';
 export const AUTH_FAIL = 'auth/authFail';
 export const INIT_LOGOUT = 'auth/initLogout';
