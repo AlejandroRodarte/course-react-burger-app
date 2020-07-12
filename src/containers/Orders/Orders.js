@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import Order from '../../components/Order/Order';
@@ -10,32 +10,28 @@ import axios from '../../axios/axios-orders';
 
 import * as actions from '../../store/actions';
 
-class Orders extends Component {
+const Orders = ({ token, history, userId, orders, loading, hasError, onStartSetOrders }) => {
 
-    componentDidMount() {
-
-        if (!this.props.token) {
-            this.props.history.replace('/builder');
+    useEffect(() => {
+        
+        if (!token) {
+            history.replace('/builder');
         }
+        
+        onStartSetOrders(token, userId);
 
-        this.props.onStartSetOrders(this.props.token, this.props.userId);
+    }, [history, onStartSetOrders, token, userId]);
 
-    }
+    const ordersJsx = orders.map((order) => <Order key={ order.id } ingredients={ order.ingredients } price={ order.price } />);
+    
+    return (
+        <div>
+            { loading && <Spinner /> }
+            { hasError ? <p>Error loading orders!</p> : ordersJsx }
+        </div>
+    );
 
-    render() {
-
-        const ordersJsx = this.props.orders.map((order) => <Order key={ order.id } ingredients={ order.ingredients } price={ order.price } />);
-
-        return (
-            <div>
-                { this.props.loading && <Spinner /> }
-                { this.props.hasError ? <p>Error loading orders!</p> : ordersJsx }
-            </div>
-        );
-
-    }
-
-}
+};
 
 const mapStateToProps = state => ({
     orders: state.orders.orders,
