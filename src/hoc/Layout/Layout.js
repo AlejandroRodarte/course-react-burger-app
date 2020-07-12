@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Fragment, useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
@@ -6,42 +6,36 @@ import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
 import classes from './Layout.module.css';
 
-class Layout extends Component {
+const Layout = ({ isAuthenticated, children }) => {
 
-    state = {
-        showSideDrawer: false
-    };
+    const [showSideDrawer, setShowSideDrawer] = useState(false);
 
-    sideDrawerClosedHandler = () => this.setState(() => ({ showSideDrawer: false }));
+    const sideDrawerClosedHandler = useCallback(() => setShowSideDrawer(false), []);
+    
+    const sideDrawerOpenHandler = useCallback(() => setShowSideDrawer(prev => !prev), []);
 
-    sideDrawerOpenHandler = () => this.setState((prevState) => ({ showSideDrawer: !prevState.showSideDrawer }));
+    return (
+        <Fragment>
 
-    render() {
+            <Toolbar 
+                opened={ sideDrawerOpenHandler }
+                isAuthenticated={ isAuthenticated }
+            />
 
-        return (
-            <Fragment>
+            <SideDrawer
+                isAuthenticated={ isAuthenticated }
+                closed={ sideDrawerClosedHandler }
+                open={ showSideDrawer }
+            />
 
-                <Toolbar 
-                    opened={ this.sideDrawerOpenHandler }
-                    isAuthenticated={ this.props.isAuthenticated }
-                />
+            <main className={ classes.Content }>
+                { children }
+            </main>
 
-                <SideDrawer
-                    isAuthenticated={ this.props.isAuthenticated }
-                    closed={ this.sideDrawerClosedHandler }
-                    open={ this.state.showSideDrawer }
-                />
+        </Fragment>
+    );
 
-                <main className={ classes.Content }>
-                    { this.props.children }
-                </main>
-
-            </Fragment>
-        );
-
-    }
-
-}
+};
 
 const mapStateToProps = state => ({
     isAuthenticated: !!state.auth.token
