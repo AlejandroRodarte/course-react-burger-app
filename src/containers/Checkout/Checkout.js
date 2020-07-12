@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
@@ -7,9 +7,9 @@ import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSumm
 
 const Checkout = ({ history, hasIngredients }) => {
 
-    const checkoutCancelledHandler = () => history.goBack();
+    const checkoutCancelledHandler = useCallback(() => history.goBack(), [history]);
     
-    const checkoutContinuedHandler = () => history.replace('/checkout/contact-data');
+    const checkoutContinuedHandler = useCallback(() => history.replace('/checkout/contact-data'), [history]);
     
     let jsx = (
         <div>
