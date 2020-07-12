@@ -1,40 +1,40 @@
-import React, { Component } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import Input from '../../components/UI/Input/Input';
 
 import updateState from '../../utils/functions/store/update-state';
 
-const withFormHandler = (WrappedComponent, controls) => class extends Component {
+const withFormHandler = (WrappedComponent, controls) => props => {
 
-    state = {
+    const [form, setForm] = useState({
         controls,
         isFormValid: false
-    };
+    });
 
-    inputChangedHandler = (inputName, e) => {
+    const inputChangedHandler = useCallback((inputName, e) => {
 
         const value = e.target.value;
 
-        this.setState((prevState) => {
+        setForm(form => {
 
-            const updatedForm = updateState(prevState.controls, {
-                [inputName]: updateState(prevState.controls[inputName], {
+            const newForm = updateState(form.controls, {
+                [inputName]: updateState(form.controls[inputName], {
                     value,
-                    valid: this.checkValidity(value, prevState.controls[inputName].validation),
+                    valid: checkValidity(value, form.controls[inputName].validation),
                     touched: true
-                }) 
+                })
             });
 
             return {
-                controls: updatedForm,
-                isFormValid: Object.keys(updatedForm).every(inputName => updatedForm[inputName].valid)
+                controls: newForm,
+                isFormValid: Object.keys(newForm).every(inputName => newForm[inputName].valid)
             };
 
         });
 
-    };
+    }, []);
 
-    checkValidity(value, rules) {
+    const checkValidity = (value, rules) => {
 
         let isValid = true;
 
@@ -64,47 +64,43 @@ const withFormHandler = (WrappedComponent, controls) => class extends Component 
 
     }
 
-    getFormValues = () => {
+    const getFormValues = useCallback(() => {
 
         const formValues = {};
 
-        for (const inputName in this.state.controls) {
-            formValues[inputName] = this.state.controls[inputName].value;
+        for (const inputName in controls) {
+            formValues[inputName] = form.controls[inputName].value;
         }
 
         return formValues;
 
-    };
+    }, [form]);
 
-    render() {
+    const formElementsJsx =
+        Object
+            .keys(form.controls)
+            .map(
+                inputName => 
+                    <Input
+                        key={ inputName }
+                        inputType={ form.controls[inputName].inputType }
+                        elementConfig={ form.controls[inputName].elementConfig }
+                        value={ form.controls[inputName].value }
+                        changed={ (e) => inputChangedHandler(inputName, e) }
+                        invalid={ !form.controls[inputName].valid }
+                        touched={ form.controls[inputName].touched }
+                        shouldValidate={ Object.keys(form.controls[inputName].validation).length > 0 }
+                    />
+            ); 
 
-        const formElementsJsx =
-            Object
-                .keys(this.state.controls)
-                .map(
-                    inputName => 
-                        <Input
-                            key={ inputName }
-                            inputType={ this.state.controls[inputName].inputType }
-                            elementConfig={ this.state.controls[inputName].elementConfig }
-                            value={ this.state.controls[inputName].value }
-                            changed={ (e) => this.inputChangedHandler(inputName, e) }
-                            invalid={ !this.state.controls[inputName].valid }
-                            touched={ this.state.controls[inputName].touched }
-                            shouldValidate={ Object.keys(this.state.controls[inputName].validation).length > 0 }
-                        />
-                ); 
-
-        return (
-            <WrappedComponent
-                { ...this.props }
-                formElementsJsx={ formElementsJsx }
-                isFormValid={ this.state.isFormValid }
-                getFormValues={ this.getFormValues }
-            />
-        );
-
-    }
+    return (
+        <WrappedComponent
+            { ...props }
+            formElementsJsx={ formElementsJsx }
+            isFormValid={ form.isFormValid }
+            getFormValues={ getFormValues }
+        />
+    );
 
 };
 
