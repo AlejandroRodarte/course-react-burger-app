@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment, useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 
 import Burger from '../../components/Burger/Burger';
@@ -14,102 +14,97 @@ import axios from '../../axios/axios-orders';
 import * as actions from '../../store/actions';
 
 import getIngredientsAmount from '../../utils/functions/burger-builder/get-ingredients-amount';
+import { useEffect } from 'react';
 
-export class BurgerBuilder extends Component {
+const BurgerBuilder = ({ hasIngredients, onStartSetIngredients, ingredientsAmount, onAddIngredient, onRemoveIngredient, isAuthenticated, history, error, loading }) => {
     
-    state = {
-        purchaseable: false,
-        purchasing: false
-    };
+    const [purchaseable, setPurchaseable] = useState(false);
+    const [purchasing, setPurchasing] = useState(false);
 
-    componentDidMount() {
+    useEffect(() => {
 
-        if (!this.props.hasIngredients) {
-            this.props.onStartSetIngredients();
+        if (!hasIngredients) {
+            onStartSetIngredients();
+        }
+    
+        if (ingredientsAmount > 0) {
+            setPurchaseable(true);
         }
 
-        if (this.props.ingredientsAmount > 0) {
-            this.setState(() => ({ purchaseable: true }));
-        }
+    }, [hasIngredients, ingredientsAmount, onStartSetIngredients]);
 
-    }
+    const addIngredientHandler = useCallback((type) => {
+        onAddIngredient(type);
+        setPurchaseable(ingredientsAmount + 1 > 0);
+    }, [ingredientsAmount, onAddIngredient]);
 
-    addIngredientHandler = (type) => {
-        this.props.onAddIngredient(type);
-        this.setState(() => ({ purchaseable: this.props.ingredientsAmount + 1 > 0 }));
-    };
+    const removeIngredientHandler = useCallback((type) => {
+        onRemoveIngredient(type);
+        setPurchaseable(ingredientsAmount - 1 > 0);
+    }, [ingredientsAmount, onRemoveIngredient]);
 
-    removeIngredientHandler = (type) => {
-        this.props.onRemoveIngredient(type);
-        this.setState(() => ({ purchaseable: this.props.ingredientsAmount + 1 > 0 }));
-    };
+    const purchaseHandler = useCallback(() => {
 
-    purchaseHandler = () => {
-
-        if (this.props.isAuthenticated) {
-            this.setState(() => ({ purchasing: true }));
+        if (isAuthenticated) {
+            setPurchasing(true);
         } else {
-            this.props.history.replace('/auth');
+            history.replace('/auth');
         }
 
-    };
+    }, [history, isAuthenticated]);
 
-    purchaseCancelHandler = () => {
-        this.setState(() => ({ purchasing: false }));
-    };
+    const purchaseCancelHandler = useCallback(() => {
+        setPurchasing(false);
+    }, []);
 
-    purchaseContinueHandler = () => this.props.history.push('/checkout');
+    const purchaseContinueHandler = useCallback(() => history.push('/checkout'), [history]);
     
-    render() {
+    let modalContentJsx = null;
 
-        let modalContentJsx = null;
+    let mainContentJsx = error ? <p>Ingredients not loaded!</p> : null;
 
-        let mainContentJsx = this.props.error ? <p>Ingredients not loaded!</p> : null;
+    if (hasIngredients) {
 
-        if (this.props.hasIngredients) {
-
-            mainContentJsx = (
-                <Fragment>
-                    <Burger />
-    
-                    <BuildControls
-                        ingredientAdded={ this.addIngredientHandler }
-                        ingredientRemoved={ this.removeIngredientHandler }
-                        purchaseable={ this.state.purchaseable }
-                        ordered={ this.purchaseHandler }
-                        isAuthenticated={ this.props.isAuthenticated }
-                    /> 
-                </Fragment>
-            );
-
-            modalContentJsx =
-                <OrderSummary 
-                    purchaseCanceled={ this.purchaseCancelHandler }
-                    purchaseContinued={ this.purchaseContinueHandler }
-                />;
-
-        }
-
-        if (this.props.loading) {
-            mainContentJsx = <Spinner />;
-        }
-
-        return (
+        mainContentJsx = (
             <Fragment>
+                <Burger />
 
-                <Modal 
-                    show={ this.state.purchasing }
-                    modalClosed={ this.purchaseCancelHandler }
-                >
-                    { modalContentJsx }
-                </Modal>
-
-                { mainContentJsx }
-
+                <BuildControls
+                    ingredientAdded={ addIngredientHandler }
+                    ingredientRemoved={ removeIngredientHandler }
+                    purchaseable={ purchaseable }
+                    ordered={ purchaseHandler }
+                    isAuthenticated={ isAuthenticated }
+                /> 
             </Fragment>
         );
 
+        modalContentJsx =
+            <OrderSummary 
+                purchaseCanceled={ purchaseCancelHandler }
+                purchaseContinued={ purchaseContinueHandler }
+            />;
+
     }
+
+    if (loading) {
+        mainContentJsx = <Spinner />;
+    }
+
+    return (
+        <Fragment>
+
+            <Modal 
+                show={ purchasing }
+                modalClosed={ purchaseCancelHandler }
+            >
+                { modalContentJsx }
+            </Modal>
+
+            { mainContentJsx }
+
+        </Fragment>
+    );
 
 }
 
