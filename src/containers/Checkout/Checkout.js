@@ -1,40 +1,36 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import CheckoutRouter from '../../routes/Checkout/CheckoutRouter';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 
-class Checkout extends Component {
+const Checkout = ({ history, hasIngredients }) => {
 
-    checkoutCancelledHandler = () => this.props.history.goBack();
+    const checkoutCancelledHandler = () => history.goBack();
+    
+    const checkoutContinuedHandler = () => history.replace('/checkout/contact-data');
+    
+    let jsx = (
+        <div>
 
-    checkoutContinuedHandler = () => this.props.history.replace('/checkout/contact-data');
+            <CheckoutSummary 
+                checkoutCancelled={ checkoutCancelledHandler }
+                checkoutContinued={ checkoutContinuedHandler }
+            />
 
-    render() {
+            <CheckoutRouter />
 
-        let jsx = (
-            <div>
+        </div>
+    );
 
-                <CheckoutSummary 
-                    checkoutCancelled={ this.checkoutCancelledHandler }
-                    checkoutContinued={ this.checkoutContinuedHandler }
-                />
-
-                <CheckoutRouter />
-
-            </div>
-        );
-
-        if (!this.props.hasIngredients) {
-            jsx = <Redirect to="/builder" />;
-        }
-
-        return jsx;
-
+    if (!hasIngredients) {
+        jsx = <Redirect to="/builder" />;
     }
+    
+    return jsx;
 
-}
+};
 
 const mapStateToProps = state => ({
     hasIngredients: Object.keys(state.builder.ingredients).length > 0
