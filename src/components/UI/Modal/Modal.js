@@ -29,6 +29,6 @@ const Modal  = React.memo(({ show, children, modalClosed }) => {
         </Fragment>
     );
 
-});
+}, (prevProps, nextProps) => nextProps.show === prevProps.show && nextProps.children === prevProps.children);
 
 export default Modal;
